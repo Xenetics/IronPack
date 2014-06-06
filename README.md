@@ -1,10 +1,7 @@
-IronPack
+The IronPack
 ========
 
-Repository for IronPack
+The Ironpack is a roguelike game where you are a robot engineer who controls a pack of robot wolves. 
 
-HOY IM IN YER README SCREWIN UP YER STUFF
+The goal of the project is to enter in the RPG make competition and also pubplish to windows 8 store for the unity competition.
 
-HON HON HON
-
-Zomg!
