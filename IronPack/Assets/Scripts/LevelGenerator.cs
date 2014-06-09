@@ -108,7 +108,7 @@ public class LevelGenerator : MonoBehaviour {
 			Vector2 buildSize;
 			if(rooms.Count < maxRooms)
 			{
-				int num = 3;//Random.Range(1, 3);
+				int num = Random.Range(1, 5);
 				switch(num)
 				{
 					//building a top side room
@@ -128,10 +128,14 @@ public class LevelGenerator : MonoBehaviour {
 					//building a bottom room
 				case 3:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-					//FIXXXXXXXXXXXXXXXXX THIIIIIIIIIIIS SHHHHHHHIIIIIIIIIIIT
-					builtRoom = buildRoom(xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3),    -Mathf.RoundToInt(room.pos.y +room.size.y + buildSize.y + yPos - 1), buildSize);
-					break;
 
+					builtRoom = buildRoom(xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3),    -Mathf.RoundToInt(room.pos.y + buildSize.y - yPos - 1), buildSize);
+					break;
+				case 4:
+					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
+					
+					builtRoom = buildRoom(-Mathf.RoundToInt(room.pos.x + buildSize.x - xPos - 1), yPos + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3), buildSize);
+					break;
 				}
 			}
 		}
