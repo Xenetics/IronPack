@@ -102,12 +102,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minRoomSize: {x: 4, y: 4}
-  maxRoomSize: {x: 20, y: 20}
-  maxRooms: 15
+  maxRoomSize: {x: 50, y: 50}
+  maxRooms: 30
   tiles:
     wall: {fileID: 21300002, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
     floor: {fileID: 21300000, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
     door: {fileID: 21300024, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+    blank: {fileID: 21300038, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
 --- !u!4 &14761771
 Transform:
   m_ObjectHideFlags: 0

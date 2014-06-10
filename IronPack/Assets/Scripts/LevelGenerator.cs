@@ -10,6 +10,7 @@ public class LevelGenerator : MonoBehaviour {
 		public Sprite wall;
 		public Sprite floor;
 		public Sprite door;
+		public Sprite blank;
 	}
 
 	[System.Serializable]
@@ -19,6 +20,7 @@ public class LevelGenerator : MonoBehaviour {
 		public Vector2 size;
 		public GameObject container;
 		public GameObject[] tiles;
+		public SpriteRenderer[] tileRenders;
 	}
 
 	enum Direction{NORTH, EAST, SOUTH, WEST};
@@ -41,13 +43,86 @@ public class LevelGenerator : MonoBehaviour {
 		buildRoom(0, 0, new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2))));
 		updateRoomPos();
 
-		//search to see if there is another wall tile in the same place
-		//if there is make it a door tile
+		//loop through all the rooms
 		for( int k = 0; k < rooms.Count; k++)//sould make this tile search thing a function(maybe)
 		{
-			for(int l = 0; l < rooms[k].tiles.Length; l++)
-			{
+			//find the tiles that are the walls and loop through them
+			//decide how many doors to be built and randomly place them(this may need to be improved)
+			//then in the loop try to place the door in the decided location
+			//if there is nothign on the other side of the door then dont place it
+			//if there are floor tiles on the other side then place it
+			//otherwise try to move the door a better palce.
 
+			//left wall
+			//cahnge this to have a door on every wall once appropraite door checks are in place
+			//int numDoors = Random.Range(0, (Mathf.CeilToInt(rooms[k].size.y * 0.1)) ); // WHY ERRORS
+
+			int doorPlace  = Random.Range(1, (Mathf.RoundToInt(rooms[k].size.y - 1)) );
+			bool done = false;
+			bool rightDone = true ;
+			bool leftDone = true;
+			for( int i = 0; i < rooms[k].size.y; i++)
+			{
+				if( i == doorPlace)
+				{
+					rightDone = true;
+					leftDone = true;
+					do
+					{
+						Vector3 tile1Pos = rooms[k].tiles[i-1].transform.position;
+						Vector3 tile2Pos = rooms[k].tiles[i].transform.position;
+						Vector3 tile3Pos = rooms[k].tiles[i+1].transform.position;
+						tile1Pos.y =- 1;
+						tile2Pos.y =- 1;
+						tile3Pos.y =- 1;
+
+
+						if(findTileRender(tile1Pos).sprite == tiles.floor &&
+						   findTileRender(tile2Pos).sprite == tiles.floor &&
+						   findTileRender(tile3Pos).sprite == tiles.floor)
+						{
+							rooms[k].tileRenders[i-1].sprite = tiles.door;
+							rooms[k].tileRenders[i].sprite = tiles.door;
+							rooms[k].tileRenders[i+1].sprite = tiles.door;
+							Debug.Log ("door made");
+							done = true;
+						}
+						else if(doorPlace < rooms[k].size.y*0.5 && rightDone == true)
+						{
+							doorPlace++;
+							leftDone = false;
+						}
+						else if(doorPlace > rooms[k].size.y*0.5 && leftDone == true)
+						{
+							doorPlace --;
+							rightDone = false;
+						}
+						else
+						{
+							rightDone = true;
+							leftDone = true;
+							done = true;
+						}
+					}while(!done);
+				}
+
+			}
+			//bottom wall
+			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
+			{
+				//rooms[k].tileRenders[i].sprite = tiles.door;
+			}
+
+			//right
+			for(int i = Mathf.RoundToInt((rooms[k].size.y * rooms[k].size.x) - rooms[k].size.y); i < rooms[k].tiles.Length; i++)
+			{
+				//rooms[k].tileRenders[i].sprite = tiles.door;
+			}
+
+			//top wall
+			for( int i = Mathf.RoundToInt(rooms[k].size.y - 1); i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
+			{
+				//rooms[k].tileRenders[i].sprite = tiles.door;
 			}
 		}
 	}
@@ -60,6 +135,41 @@ public class LevelGenerator : MonoBehaviour {
 		}
 	}
 
+	private GameObject findTile(Vector3 v)
+	{
+		for( int i = 0; i < rooms.Count; i++)//sould make this tile search thing a function(maybe)
+		{
+			for(int j = 0; j < rooms[i].tiles.Length; j++)
+			{
+				if(rooms[i].tiles[j].transform.position == v)
+				{
+					return rooms[i].tiles[j];
+				}
+			}
+		}
+		GameObject ret = new GameObject();
+		return ret;
+	}
+
+	private SpriteRenderer findTileRender(Vector3 v)
+	{
+		for( int i = 0; i < rooms.Count; i++)//sould make this tile search thing a function(maybe)
+		{
+			for(int j = 0; j < rooms[i].tiles.Length; j++)
+			{
+				if(rooms[i].tiles[j].transform.position == v)
+				{
+					return rooms[i].tileRenders[j];
+				}
+			}
+		}
+		GameObject ret = new GameObject();
+		SpriteRenderer rend;
+		rend = ret.AddComponent("SpriteRenderer") as SpriteRenderer;
+		rend.sprite = tiles.blank;
+		return rend;
+	}
+
 	private Room buildRoom(int xPos, int yPos, Vector2 size)
 	{
 		//set up
@@ -70,6 +180,7 @@ public class LevelGenerator : MonoBehaviour {
 		//build room
 		room.size = size;
 		room.tiles = new GameObject[Mathf.RoundToInt(room.size.x * room.size.y)];
+		room.tileRenders = new SpriteRenderer[Mathf.RoundToInt(room.size.x * room.size.y)];
 		for(int i = 0; i < room.size.x; i++)
 		{
 			for(int j = 0; j < room.size.y; j++)
@@ -96,6 +207,7 @@ public class LevelGenerator : MonoBehaviour {
 				}
 				tile.transform.parent = room.container.transform;
 				room.tiles[ Mathf.RoundToInt( (i*room.size.y) + j) ] = tile;  
+				room.tileRenders[ Mathf.RoundToInt( (i*room.size.y) + j) ] = tileRend;  
 			}
 		}
 		rooms.Add(room);
