@@ -57,60 +57,89 @@ public class LevelGenerator : MonoBehaviour {
 			//cahnge this to have a door on every wall once appropraite door checks are in place
 			//int numDoors = Random.Range(0, (Mathf.CeilToInt(rooms[k].size.y * 0.1)) ); // WHY ERRORS
 
-			int doorPlace  = Random.Range(1, (Mathf.RoundToInt(rooms[k].size.y - 1)) );
-			bool done = false;
-			bool rightDone = true ;
-			bool leftDone = true;
+			int doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.y - 3)) );
+			int counter;
 			for( int i = 0; i < rooms[k].size.y; i++)
 			{
+				counter = 0;
 				if( i == doorPlace)
 				{
-					rightDone = true;
-					leftDone = true;
 					do
 					{
-						Vector3 tile1Pos = rooms[k].tiles[i-1].transform.position;
-						Vector3 tile2Pos = rooms[k].tiles[i].transform.position;
-						Vector3 tile3Pos = rooms[k].tiles[i+1].transform.position;
-						tile1Pos.y =- 1;
-						tile2Pos.y =- 1;
-						tile3Pos.y =- 1;
+						Vector3 tile1Pos = rooms[k].tiles[doorPlace-1].transform.position;
+						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
+						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
+						tile1Pos.x -= 1;
+						tile2Pos.x -= 1;
+						tile3Pos.x -= 1;
 
+						SpriteRenderer text1 = findTileRender(tile1Pos);
+						SpriteRenderer text2 = findTileRender(tile2Pos);
+						SpriteRenderer text3 = findTileRender(tile3Pos);
 
-						if(findTileRender(tile1Pos).sprite == tiles.floor &&
-						   findTileRender(tile2Pos).sprite == tiles.floor &&
-						   findTileRender(tile3Pos).sprite == tiles.floor)
+						if(text1 != null && text1.sprite == tiles.floor &&
+						   text2 != null && text2.sprite == tiles.floor &&
+						   text3 != null && text3.sprite == tiles.floor)
 						{
-							rooms[k].tileRenders[i-1].sprite = tiles.door;
-							rooms[k].tileRenders[i].sprite = tiles.door;
-							rooms[k].tileRenders[i+1].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
 							Debug.Log ("door made");
-							done = true;
-						}
-						else if(doorPlace < rooms[k].size.y*0.5 && rightDone == true)
-						{
-							doorPlace++;
-							leftDone = false;
-						}
-						else if(doorPlace > rooms[k].size.y*0.5 && leftDone == true)
-						{
-							doorPlace --;
-							rightDone = false;
+							break;
 						}
 						else
 						{
-							rightDone = true;
-							leftDone = true;
-							done = true;
+							if(doorPlace > rooms[k].size.y-3)
+							{
+								doorPlace = 2;
+							}
+							doorPlace++;
 						}
-					}while(!done);
+						counter++;
+					}while(counter < rooms[k].size.y - 5);
 				}
 
 			}
 			//bottom wall
 			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
-				//rooms[k].tileRenders[i].sprite = tiles.door;
+//				counter = 0;
+//				if( i == doorPlace)
+//				{
+//					do
+//					{
+//						Vector3 tile1Pos = rooms[k].tiles[doorPlace-1].transform.position;
+//						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
+//						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
+//						tile1Pos.x -= 1;
+//						tile2Pos.x -= 1;
+//						tile3Pos.x -= 1;
+//
+//						SpriteRenderer text1 = findTileRender(tile1Pos);
+//						SpriteRenderer text2 = findTileRender(tile2Pos);
+//						SpriteRenderer text3 = findTileRender(tile3Pos);
+//
+//						if(text1 != null && text1.sprite == tiles.floor &&
+//						   text2 != null && text2.sprite == tiles.floor &&
+//						   text3 != null && text3.sprite == tiles.floor)
+//						{
+//							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
+//							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
+//							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
+//							Debug.Log ("door made");
+//							break;
+//						}
+//						else
+//						{
+//							if(doorPlace > rooms[k].size.y-3)
+//							{
+//								doorPlace = 2;
+//							}
+//							doorPlace++;
+//						}
+//						counter++;
+//					}while(counter < rooms[k].size.y - 5);
+//				}
 			}
 
 			//right
@@ -137,7 +166,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	private GameObject findTile(Vector3 v)
 	{
-		for( int i = 0; i < rooms.Count; i++)//sould make this tile search thing a function(maybe)
+		for( int i = rooms.Count -1; i >= 0 ; i--)//sould make this tile search thing a function(maybe)
 		{
 			for(int j = 0; j < rooms[i].tiles.Length; j++)
 			{
@@ -153,7 +182,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	private SpriteRenderer findTileRender(Vector3 v)
 	{
-		for( int i = 0; i < rooms.Count; i++)//sould make this tile search thing a function(maybe)
+		for( int i = rooms.Count-1; i >= 0 ; i--)//sould make this tile search thing a function(maybe)
 		{
 			for(int j = 0; j < rooms[i].tiles.Length; j++)
 			{
@@ -163,11 +192,7 @@ public class LevelGenerator : MonoBehaviour {
 				}
 			}
 		}
-		GameObject ret = new GameObject();
-		SpriteRenderer rend;
-		rend = ret.AddComponent("SpriteRenderer") as SpriteRenderer;
-		rend.sprite = tiles.blank;
-		return rend;
+		return null;
 	}
 
 	private Room buildRoom(int xPos, int yPos, Vector2 size)
