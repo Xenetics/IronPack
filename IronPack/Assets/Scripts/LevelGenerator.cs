@@ -84,12 +84,12 @@ public class LevelGenerator : MonoBehaviour {
 							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
 							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
 							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
-							Debug.Log ("door made");
+							//Debug.Log ("door made");
 							break;
 						}
 						else
 						{
-							if(doorPlace > rooms[k].size.y-3)
+							if(doorPlace > rooms[k].size.y-4)
 							{
 								doorPlace = 2;
 							}
@@ -101,51 +101,90 @@ public class LevelGenerator : MonoBehaviour {
 
 			}
 			//bottom wall
+			doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.y - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
 			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
-//				counter = 0;
-//				if( i == doorPlace)
-//				{
-//					do
-//					{
-//						Vector3 tile1Pos = rooms[k].tiles[doorPlace-1].transform.position;
-//						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
-//						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
-//						tile1Pos.x -= 1;
-//						tile2Pos.x -= 1;
-//						tile3Pos.x -= 1;
-//
-//						SpriteRenderer text1 = findTileRender(tile1Pos);
-//						SpriteRenderer text2 = findTileRender(tile2Pos);
-//						SpriteRenderer text3 = findTileRender(tile3Pos);
-//
-//						if(text1 != null && text1.sprite == tiles.floor &&
-//						   text2 != null && text2.sprite == tiles.floor &&
-//						   text3 != null && text3.sprite == tiles.floor)
-//						{
-//							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
-//							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
-//							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
-//							Debug.Log ("door made");
-//							break;
-//						}
-//						else
-//						{
-//							if(doorPlace > rooms[k].size.y-3)
-//							{
-//								doorPlace = 2;
-//							}
-//							doorPlace++;
-//						}
-//						counter++;
-//					}while(counter < rooms[k].size.y - 5);
-//				}
+				counter = 0;
+				if( i == doorPlace)
+				{
+					do
+					{
+						Vector3 tile1Pos = rooms[k].tiles[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].transform.position;
+						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
+						Vector3 tile3Pos = rooms[k].tiles[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].transform.position;
+						tile1Pos.y -= 1;
+						tile2Pos.y -= 1;
+						tile3Pos.y -= 1;
+
+						SpriteRenderer text1 = findTileRender(tile1Pos);
+						SpriteRenderer text2 = findTileRender(tile2Pos);
+						SpriteRenderer text3 = findTileRender(tile3Pos);
+
+						if(text1 != null && text1.sprite == tiles.floor &&
+						   text2 != null && text2.sprite == tiles.floor &&
+						   text3 != null && text3.sprite == tiles.floor)
+						{
+							rooms[k].tileRenders[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
+							//Debug.Log ("door made");
+							break;
+						}
+						else
+						{
+							if(doorPlace > (rooms[k].size.y * (rooms[k].size.x - 4)) )
+							{
+								doorPlace = Mathf.RoundToInt(rooms[k].size.y)* 2;
+							}
+							doorPlace += Mathf.RoundToInt(rooms[k].size.y);
+						}
+						counter++;
+					}while(counter < rooms[k].size.y - 5);
+				}
 			}
 
 			//right
-			for(int i = Mathf.RoundToInt((rooms[k].size.y * rooms[k].size.x) - rooms[k].size.y); i < rooms[k].tiles.Length; i++)
+			int tempStart = Mathf.RoundToInt((rooms[k].size.y * rooms[k].size.x) - rooms[k].size.y);
+			doorPlace  = Random.Range(tempStart + 2, Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x)-3 );
+			for(int i = tempStart; i < rooms[k].tiles.Length; i++)
 			{
-				//rooms[k].tileRenders[i].sprite = tiles.door;
+				counter = 0;
+				if( i == doorPlace)
+				{
+					do
+					{
+						Vector3 tile1Pos = rooms[k].tiles[doorPlace-1].transform.position;
+						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
+						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
+						tile1Pos.x += 1;
+						tile2Pos.x += 1;
+						tile3Pos.x += 1;
+						
+						SpriteRenderer text1 = findTileRender(tile1Pos);
+						SpriteRenderer text2 = findTileRender(tile2Pos);
+						SpriteRenderer text3 = findTileRender(tile3Pos);
+						
+						if(text1 != null && text1.sprite == tiles.floor &&
+						   text2 != null && text2.sprite == tiles.floor &&
+						   text3 != null && text3.sprite == tiles.floor)
+						{
+							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
+							//Debug.Log ("door made");
+							break;
+						}
+						else
+						{
+							if(doorPlace > Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x)-4)
+							{
+								doorPlace = tempStart + 2;
+							}
+							doorPlace++;
+						}
+						counter++;
+							}while(counter < Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x) - 5);
+				}
 			}
 
 			//top wall
