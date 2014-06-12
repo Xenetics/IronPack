@@ -101,7 +101,7 @@ public class LevelGenerator : MonoBehaviour {
 
 			}
 			//bottom wall
-			doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.y - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
+			doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.x - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
 			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
 				counter = 0;
@@ -188,9 +188,48 @@ public class LevelGenerator : MonoBehaviour {
 			}
 
 			//top wall
+			doorPlace = Mathf.RoundToInt(rooms[k].size.y - 1)  +  ( Random.Range(2, Mathf.RoundToInt(rooms[k].size.x - 3) ) * (Mathf.RoundToInt(rooms[k].size.y)) );
 			for( int i = Mathf.RoundToInt(rooms[k].size.y - 1); i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
-				//rooms[k].tileRenders[i].sprite = tiles.door;
+				counter = 0;
+				if( i == doorPlace)
+				{
+					do
+					{
+						Vector3 tile1Pos = rooms[k].tiles[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].transform.position;
+						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
+						Vector3 tile3Pos = rooms[k].tiles[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].transform.position;
+						tile1Pos.y += 1;
+						tile2Pos.y += 1;
+						tile3Pos.y += 1;
+						
+						SpriteRenderer text1 = findTileRender(tile1Pos);
+						SpriteRenderer text2 = findTileRender(tile2Pos);
+						SpriteRenderer text3 = findTileRender(tile3Pos);
+
+						
+						if(text1 != null && text1.sprite == tiles.floor &&
+						   text2 != null && text2.sprite == tiles.floor &&
+						   text3 != null && text3.sprite == tiles.floor)
+						{
+							rooms[k].tileRenders[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
+							Debug.Log ("door made");
+							break;
+						}
+						else
+						{
+							if(doorPlace > (rooms[k].tiles.Length - (rooms[k].size.y * 3)) )
+							{
+								doorPlace = Mathf.RoundToInt(rooms[k].size.y - 1);
+								doorPlace += Mathf.RoundToInt(rooms[k].size.y);
+							}
+							doorPlace += Mathf.RoundToInt(rooms[k].size.y);
+						}
+						counter++;
+					}while(counter < rooms[k].size.y - 5);
+				}
 			}
 		}
 	}
