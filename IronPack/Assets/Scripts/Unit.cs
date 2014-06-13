@@ -11,6 +11,21 @@ public class Unit : MonoBehaviour
 	public int defence;
 	public int visionDistance;
 
+	public Sprite faceUp;
+	public Sprite faceRight;
+	public Sprite faceDown;
+	public Sprite faceLeft;
+
+	public Sprite[] walkUp;
+	public Sprite[] walkRight;
+	public Sprite[] walkDown;
+	public Sprite[] walkLeft;
+
+	private Sprite[] standSprites;
+	private Sprite[] [] walkSprites;
+
+	private SpriteRenderer rend;
+
 	private int facing;
 
 	private Vector3 targetPositon;
@@ -35,30 +50,64 @@ public class Unit : MonoBehaviour
 
 	public void startFunc()
 	{
+		standSprites = new Sprite[]{faceUp, faceRight, faceDown, faceLeft};
+		walkSprites = new Sprite[][]{walkUp, walkRight, walkDown, walkLeft};
+
+		rend = GetComponent<SpriteRenderer>();
+
 		targetPositon = transform.position;
 		facing = (int) dir.DOWN;
 	}
 
 	public void updateLoop()
 	{
-		if( targetPositon != transform.position)
+		//make this not exact
+		if( !((targetPositon.x > transform.position.x - 0.05f && targetPositon.x < transform.position.x + 0.05f ) &&
+		   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f)) )
 		{
+			//moving = true;
 			transform.position += displacment * speed * 0.01f;
 			Debug.Log ("zooooooooooooooooom");
+
+			//animation stuff
+			Vector3 temp =  targetPositon - transform.position;
+			float animPercent = 1 - Mathf.Abs( temp.y + temp.x);//hacks?
+			if(animPercent > 0.95)
+			{
+				rend.sprite = standSprites[facing];
+			}
+			else if(animPercent > 0)
+			{
+				int animPos = Mathf.FloorToInt(walkSprites[facing].Length * animPercent);
+				rend.sprite = walkSprites[facing][animPos];
+			}
 		}
+		//this will stop the unit from being anywere but on a grid point if it is not moving
+		/*this is doing nothing right now 
+		else if ( transform.position.y != Mathf.Round(transform.position.y) || transform.position.x != Mathf.Round(transform.position.x))
+		{
+			//moving = false;
+			Vector3 temp = transform.position;
+			temp.y = Mathf.Round(temp.y);
+			temp.x = Mathf.Round(temp.x);
+			transform.position = temp;
+			targetPositon = transform.position;
+		}*/
 	}
 
 	public void changeDir(int d)
 	{
-		if ( d >= 0 && d <= 4)
+		if ( d >= 0 && d <= 3)
 		{
 			facing = d;
 		}
+		rend.sprite = standSprites[facing];
 	}
 
 	public void move()
 	{
-		if( targetPositon == transform.position)
+		if((targetPositon.x > transform.position.x - 0.05f && targetPositon.x < transform.position.x + 0.05f ) &&
+		   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f))
 		{
 			switch(facing)
 			{

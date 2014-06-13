@@ -12,25 +12,38 @@ public class Player : Unit{
 	void Update () {
 		updateLoop();
 
-		if(Input.GetKey(KeyCode.W))
+		if(Input.GetKeyDown(KeyCode.W))
 		{
 			changeDir((int) dir.UP);
+		}
+		else if(Input.GetKeyDown(KeyCode.D))
+		{
+			changeDir((int) dir.RIGHT);
+		}
+		else if(Input.GetKeyDown(KeyCode.S))
+		{
+			changeDir((int) dir.DOWN);
+		}
+		else if(Input.GetKeyDown(KeyCode.A))
+		{
+			changeDir((int) dir.LEFT);
+		}
+
+
+		if(Input.GetKey(KeyCode.W))
+		{
 			move ();
-			Debug.Log ("keyhit");
 		}
 		else if(Input.GetKey(KeyCode.D))
 		{
-			changeDir((int) dir.RIGHT);
 			move ();
 		}
 		else if(Input.GetKey(KeyCode.S))
 		{
-			changeDir((int) dir.DOWN);
 			move ();
 		}
 		else if(Input.GetKey(KeyCode.A))
 		{
-			changeDir((int) dir.LEFT);
 			move ();
 		}
 	}

@@ -132,6 +132,7 @@ GameObject:
   - 92: {fileID: 747027893}
   - 124: {fileID: 747027892}
   - 81: {fileID: 747027891}
+  - 114: {fileID: 747027896}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -200,6 +201,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &747027896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 747027890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9c2335b6b3bdf745bbd5374630a1f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1483958970}
+  cameraSpeed: .150000006
 --- !u!1 &1483958970
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,9 +246,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPower: 0
   health: 0
-  speed: 30
+  speed: 10
   defence: 0
   visionDistance: 0
+  faceUp: {fileID: 21300000, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  faceRight: {fileID: 21300002, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  faceDown: {fileID: 21300004, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  faceLeft: {fileID: 21300006, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkUp:
+  - {fileID: 21300008, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300010, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300012, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300014, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkRight:
+  - {fileID: 21300016, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300018, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300020, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300022, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkDown:
+  - {fileID: 21300024, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300026, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300028, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300030, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkLeft:
+  - {fileID: 21300032, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300034, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300036, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300038, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
 --- !u!212 &1483958972
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -278,7 +316,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: .899999976, y: .899999976}
   m_Center: {x: 0, y: 0}
 --- !u!50 &1483958975
 Rigidbody2D:
