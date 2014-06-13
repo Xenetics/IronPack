@@ -1,12 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LevelGenerator.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player.cs">
     <Files>
-      <File FileName="Assets\Scripts\LevelGenerator.cs" Line="104" Column="77" />
+      <File FileName="Assets\Scripts\Player.cs" Line="8" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Alex\Documents\GitHub\IronPack\IronPack\Assets\Scripts\LevelGenerator.cs" line="420" />
+      <Breakpoint file="C:\Users\Alex\Documents\GitHub\IronPack\IronPack\Assets\Scripts\LevelGenerator.cs" line="390" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -48,6 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Game Manager.cs" />
      <Compile Include="Assets\Scripts\LevelGenerator.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\Unit.cs" />
+     <Compile Include="Assets\Scripts\Wolf.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -61,6 +61,9 @@ public class LevelGenerator : MonoBehaviour {
 			int counter;
 			for( int i = 0; i < rooms[k].size.y; i++)
 			{
+				BoxCollider2D tileCol;
+				tileCol = rooms[k].tiles[i].AddComponent("BoxCollider2D") as BoxCollider2D;
+
 				counter = 0;
 				if( i == doorPlace)
 				{
@@ -104,6 +107,9 @@ public class LevelGenerator : MonoBehaviour {
 			doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.x - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
 			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
+				BoxCollider2D tileCol;
+				tileCol = rooms[k].tiles[i].AddComponent("BoxCollider2D") as BoxCollider2D;
+
 				counter = 0;
 				if( i == doorPlace)
 				{
@@ -148,6 +154,9 @@ public class LevelGenerator : MonoBehaviour {
 			doorPlace  = Random.Range(tempStart + 2, Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x)-3 );
 			for(int i = tempStart; i < rooms[k].tiles.Length; i++)
 			{
+				BoxCollider2D tileCol;
+				tileCol = rooms[k].tiles[i].AddComponent("BoxCollider2D") as BoxCollider2D;
+
 				counter = 0;
 				if( i == doorPlace)
 				{
@@ -191,6 +200,9 @@ public class LevelGenerator : MonoBehaviour {
 			doorPlace = Mathf.RoundToInt(rooms[k].size.y - 1)  +  ( Random.Range(2, Mathf.RoundToInt(rooms[k].size.x - 3) ) * (Mathf.RoundToInt(rooms[k].size.y)) );
 			for( int i = Mathf.RoundToInt(rooms[k].size.y - 1); i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
+				BoxCollider2D tileCol;
+				tileCol = rooms[k].tiles[i].AddComponent("BoxCollider2D") as BoxCollider2D;
+
 				counter = 0;
 				if( i == doorPlace)
 				{
@@ -244,7 +256,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	private GameObject findTile(Vector3 v)
 	{
-		for( int i = rooms.Count -1; i >= 0 ; i--)//sould make this tile search thing a function(maybe)
+		for( int i = rooms.Count -1; i >= 0 ; i--)
 		{
 			for(int j = 0; j < rooms[i].tiles.Length; j++)
 			{
@@ -260,7 +272,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	private SpriteRenderer findTileRender(Vector3 v)
 	{
-		for( int i = rooms.Count-1; i >= 0 ; i--)//sould make this tile search thing a function(maybe)
+		for( int i = rooms.Count-1; i >= 0 ; i--)
 		{
 			for(int j = 0; j < rooms[i].tiles.Length; j++)
 			{
@@ -315,12 +327,28 @@ public class LevelGenerator : MonoBehaviour {
 		}
 		rooms.Add(room);
 
-		//make more rooms
+		room.container.transform.position = room.pos;
 
+		//make more rooms
+		updateRoomPos();
+
+		int tries = 0;
 		for( int i = 0; i < 2; i++)
 		{
 			Room builtRoom;
 			Vector2 buildSize;
+			float buildPosX;
+			float buildPosY;
+			Vector3 tile1Pos;
+			Vector3 tile2Pos;
+			Vector3 tile3Pos;
+			Vector3 tile4Pos;
+			
+			SpriteRenderer text1;
+			SpriteRenderer text2;
+			SpriteRenderer text3;
+			SpriteRenderer text4;
+
 			if(rooms.Count < maxRooms)
 			{
 				int num = Random.Range(1, 5);
@@ -329,27 +357,119 @@ public class LevelGenerator : MonoBehaviour {
 					//building a top side room
 				case 1:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
+					buildPosX = xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3);
+					buildPosY = room.pos.y + room.size.y + yPos - 1;
 
-					builtRoom = buildRoom(xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3), Mathf.RoundToInt(room.pos.y + room.size.y + yPos - 1), buildSize);
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
+
+					text1 = findTileRender(tile1Pos);
+					text2 = findTileRender(tile2Pos);
+					text3 = findTileRender(tile3Pos);
+					text4 = findTileRender(tile4Pos);
+					if( text1 == null &&
+					    text2 == null &&
+					    text3 == null && 
+					    text4 == null)
+
+					{
+						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
+					}
+					else if(tries < 5)
+					{
+						i--;
+						tries++;
+					}
 					break;
 
 					//building a right side room
 				case 2:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-
-					builtRoom = buildRoom(Mathf.RoundToInt(room.pos.x + room.size.x + xPos - 1), yPos + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3), buildSize);
+					buildPosX = room.pos.x + room.size.x + xPos - 1;
+					buildPosY = yPos + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3);
+					
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
+					
+					text1 = findTileRender(tile1Pos);
+					text2 = findTileRender(tile2Pos);
+					text3 = findTileRender(tile3Pos);
+					text4 = findTileRender(tile4Pos);
+					if( text1 == null &&
+					   text2 == null &&
+					   text3 == null && 
+					   text4 == null)
+						
+					{
+						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
+					}
+					else if (tries < 5)
+					{
+						i--;
+						tries++;
+					}
 					break;
 
 					//building a bottom room
 				case 3:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-
-					builtRoom = buildRoom(xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3),    -Mathf.RoundToInt(room.pos.y + buildSize.y - yPos - 1), buildSize);
-					break;
+					buildPosX = xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3);
+					buildPosY = room.pos.y + buildSize.y - yPos - 1;
+					
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
+					
+					text1 = findTileRender(tile1Pos);
+					text2 = findTileRender(tile2Pos);
+					text3 = findTileRender(tile3Pos);
+					text4 = findTileRender(tile4Pos);
+					if( text1 == null &&
+					   text2 == null &&
+					   text3 == null && 
+					   text4 == null)
+						
+					{
+						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), -Mathf.RoundToInt(buildPosY), buildSize);
+					}
+					else if(tries < 5)
+					{
+						i--;
+						tries++;
+					}
+						break;
 				case 4:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
+					buildPosX = room.pos.x + buildSize.x - xPos - 1;
+					buildPosY = yPos + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3);
 					
-					builtRoom = buildRoom(-Mathf.RoundToInt(room.pos.x + buildSize.x - xPos - 1), yPos + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3), buildSize);
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
+					
+					text1 = findTileRender(tile1Pos);
+					text2 = findTileRender(tile2Pos);
+					text3 = findTileRender(tile3Pos);
+					text4 = findTileRender(tile4Pos);
+					if( text1 == null &&
+					   text2 == null &&
+					   text3 == null && 
+					   text4 == null)
+						
+					{
+						builtRoom = buildRoom(-Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
+					}
+					else if(tries < 5)
+					{
+						tries++;
+						i--;
+					}
 					break;
 				}
 			}
