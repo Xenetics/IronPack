@@ -21,10 +21,18 @@ public class Unit : MonoBehaviour
 	public Sprite[] walkDown;
 	public Sprite[] walkLeft;
 
+	public GameObject sensorUp;
+	public GameObject sensorRight;
+	public GameObject sensorDown;
+	public GameObject sensorLeft;
+
 	private Sprite[] standSprites;
 	private Sprite[] [] walkSprites;
 
 	private SpriteRenderer rend;
+
+	private GameObject[] Sensors;
+	private Sensor[] sensorScripts;
 
 	private int facing;
 
@@ -53,6 +61,10 @@ public class Unit : MonoBehaviour
 		standSprites = new Sprite[]{faceUp, faceRight, faceDown, faceLeft};
 		walkSprites = new Sprite[][]{walkUp, walkRight, walkDown, walkLeft};
 
+		Sensors = new GameObject[] {sensorUp, sensorRight, sensorDown, sensorLeft};
+		sensorScripts = new Sensor[] {sensorUp.GetComponent<Sensor>(), sensorRight.GetComponent<Sensor>(), sensorDown.GetComponent<Sensor>(), sensorLeft.GetComponent<Sensor>()};
+
+
 		rend = GetComponent<SpriteRenderer>();
 
 		targetPositon = transform.position;
@@ -67,7 +79,7 @@ public class Unit : MonoBehaviour
 		{
 			//moving = true;
 			transform.position += displacment * speed * 0.01f;
-			Debug.Log ("zooooooooooooooooom");
+			//Debug.Log ("zooooooooooooooooom");
 
 			//animation stuff
 			Vector3 temp =  targetPositon - transform.position;
@@ -107,7 +119,8 @@ public class Unit : MonoBehaviour
 	public void move()
 	{
 		if((targetPositon.x > transform.position.x - 0.05f && targetPositon.x < transform.position.x + 0.05f ) &&
-		   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f))
+		   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f) &&
+		   (!sensorScripts[facing].isColliding) )
 		{
 			switch(facing)
 			{

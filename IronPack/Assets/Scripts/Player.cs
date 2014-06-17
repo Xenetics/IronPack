@@ -11,40 +11,60 @@ public class Player : Unit{
 	// Update is called once per frame
 	void Update () {
 		updateLoop();
+		if( Input.GetKey(KeyCode.LeftShift))
+		{
+			if(Input.GetKeyDown(KeyCode.W))
+			{
+				changeDir((int) dir.UP);
+			}
+			else if(Input.GetKeyDown(KeyCode.D))
+			{
+				changeDir((int) dir.RIGHT);
+			}
+			else if(Input.GetKeyDown(KeyCode.S))
+			{
+				changeDir((int) dir.DOWN);
+			}
+			else if(Input.GetKeyDown(KeyCode.A))
+			{
+				changeDir((int) dir.LEFT);
+			}
+		}
+		else
+		{
+			if(Input.GetKeyDown(KeyCode.W))
+			{
+				changeDir((int) dir.UP);
+			}
+			else if(Input.GetKeyDown(KeyCode.D))
+			{
+				changeDir((int) dir.RIGHT);
+			}
+			else if(Input.GetKeyDown(KeyCode.S))
+			{
+				changeDir((int) dir.DOWN);
+			}
+			else if(Input.GetKeyDown(KeyCode.A))
+			{
+				changeDir((int) dir.LEFT);
+			}
 
-		if(Input.GetKeyDown(KeyCode.W))
-		{
-			changeDir((int) dir.UP);
-		}
-		else if(Input.GetKeyDown(KeyCode.D))
-		{
-			changeDir((int) dir.RIGHT);
-		}
-		else if(Input.GetKeyDown(KeyCode.S))
-		{
-			changeDir((int) dir.DOWN);
-		}
-		else if(Input.GetKeyDown(KeyCode.A))
-		{
-			changeDir((int) dir.LEFT);
-		}
-
-
-		if(Input.GetKey(KeyCode.W))
-		{
-			move ();
-		}
-		else if(Input.GetKey(KeyCode.D))
-		{
-			move ();
-		}
-		else if(Input.GetKey(KeyCode.S))
-		{
-			move ();
-		}
-		else if(Input.GetKey(KeyCode.A))
-		{
-			move ();
+			if(Input.GetKey(KeyCode.W))
+			{
+				move ();
+			}
+			else if(Input.GetKey(KeyCode.D))
+			{
+				move ();
+			}
+			else if(Input.GetKey(KeyCode.S))
+			{
+				move ();
+			}
+			else if(Input.GetKey(KeyCode.A))
+			{
+				move ();
+			}
 		}
 	}
 }
