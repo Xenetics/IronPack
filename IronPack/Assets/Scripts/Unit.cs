@@ -144,4 +144,9 @@ public class Unit : MonoBehaviour
 		}
 	}
 
+	public int getFacing()
+	{
+		return facing;
+	}
+
 }

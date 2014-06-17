@@ -53,15 +53,24 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
     - name: Room-Tiles_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 65
         y: 448
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
+    - name: Room-Tiles_2
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
   spritePackingTag: 
   userData: 
