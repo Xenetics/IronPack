@@ -19,7 +19,7 @@ RenderSettings:
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 6894d7b7cca90904db812e0858fdbc3b, type: 2}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -287,12 +287,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddf8086c7d98894da5e52dc61ee713d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightingEnabled: 1
   mask: {fileID: 21300004, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 256
   target: {fileID: 365627261}
   facing: 0
+  maskSize: {x: 23, y: 13}
 --- !u!4 &508651121
 Transform:
   m_ObjectHideFlags: 0
@@ -425,7 +427,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -458,7 +460,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 365627261}
-  cameraSpeed: .150000006
 --- !u!1 &768123259
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +550,22 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: minRoomSize.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: minRoomSize.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: maxRoomSize.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: maxRoomSize.y
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
   m_RootGameObject: {fileID: 1137196807}
@@ -582,8 +599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4720c4c229224eb40b14e6c5782142f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRoomSize: {x: 10, y: 10}
-  maxRoomSize: {x: 15, y: 15}
+  minRoomSize: {x: 40, y: 40}
+  maxRoomSize: {x: 50, y: 50}
   maxRooms: 1
   tiles:
     wall: {fileID: 21300002, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}

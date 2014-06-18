@@ -4,7 +4,7 @@ using System.Collections;
 public class Camera : MonoBehaviour {
 
 	public GameObject target;
-	public float cameraSpeed = 0.08f;
+	private float cameraSpeed = 1f;
 	
 
 	// Use this for initialization
@@ -23,25 +23,33 @@ public class Camera : MonoBehaviour {
 				temp.x -= cameraSpeed;
 				transform.position = temp;
 			}
-			if(Input.mousePosition.y < 3)
+			else if(Input.mousePosition.y < 3)
 			{
 				Vector3 temp = transform.position;
 				temp.z -= 1;
 				temp.y -= cameraSpeed;
 				transform.position = temp;
 			}
-			if(Input.mousePosition.x > Screen.width - 3)
+			else if(Input.mousePosition.x > Screen.width - 3)
 			{
 				Vector3 temp = transform.position;
 				temp.z -= 1;
 				temp.x += cameraSpeed;
 				transform.position = temp;
 			}
-			if(Input.mousePosition.y > Screen.height - 3)
+			else if(Input.mousePosition.y > Screen.height - 3)
 			{
 				Vector3 temp = transform.position;
 				temp.z -= 1;
 				temp.y += cameraSpeed;
+				transform.position = temp;
+			}
+			else if ( transform.position.y != Mathf.Round(transform.position.y) || transform.position.x != Mathf.Round(transform.position.x))
+			{
+				//moving = false;
+				Vector3 temp = transform.position;
+				temp.y = Mathf.Round(temp.y);
+				temp.x = Mathf.Round(temp.x);
 				transform.position = temp;
 			}
 		}
@@ -51,5 +59,8 @@ public class Camera : MonoBehaviour {
 			temp.z -= 1;
 			transform.position = temp;
 		}
+
+
+
 	}
 }

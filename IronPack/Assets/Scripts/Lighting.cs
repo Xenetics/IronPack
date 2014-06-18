@@ -6,30 +6,31 @@ public class Lighting : MonoBehaviour
 {
 	private enum dir {UP, RIGHT, DOWN, LEFT};
 
+	public bool lightingEnabled = true;
 	public Sprite mask;
-
 	public LayerMask ignoreLayers;
 
 	public GameObject target;
 	public int facing;
 
-	private Vector2 maskSize;
-	private int vision;
+	public Vector2 maskSize = new Vector2(16f, 9f);
 
+
+	private int vision;
+	private Transform cam;
 	private GameObject[,] maskTiles;
 
 	// Use this for initialization
 	void Start () 
 	{
 		//look at using draw.texture to do the texture rather then sprite shit
-		maskSize = new Vector2(Mathf.Ceil(Screen.width / 64) + 4, Mathf.Ceil(Screen.height/64) + 3);
 		facing = target.GetComponent<Unit>().getFacing();
 		vision = target.GetComponent<Unit>().visionDistance;
-
+		cam = transform.parent;
 		ignoreLayers = ~ignoreLayers;
 
 		maskTiles = new GameObject[Mathf.RoundToInt(maskSize.x),Mathf.RoundToInt(maskSize.y)];
-
+		//fix this shit
 		for(int i = 0; i < maskSize.x; i++)
 		{
 			for(int j = 0; j < maskSize.y; j++)
@@ -43,7 +44,10 @@ public class Lighting : MonoBehaviour
 				tileRend = tile.AddComponent("SpriteRenderer") as SpriteRenderer;
 				tileRend.sprite = mask;
 				tile.transform.parent = transform;
-				//tile.SetActive(false);
+				if(!lightingEnabled)
+				{
+					tile.SetActive(false);
+				}
 				maskTiles[i,j] = tile;
 			}
 		}
@@ -52,7 +56,8 @@ public class Lighting : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{	
-		if(target.transform.position.y == Mathf.Round(target.transform.position.y) && target.transform.position.x == Mathf.Round(target.transform.position.x))
+		if( (target.transform.position.y == Mathf.Round(target.transform.position.y) && target.transform.position.x == Mathf.Round(target.transform.position.x))&&
+		    (cam.transform.position.y == Mathf.Round(cam.transform.position.y) && cam.transform.position.x == Mathf.Round(cam.transform.position.x)) )
 		{
 			resetVision();
 		}
@@ -95,7 +100,7 @@ public class Lighting : MonoBehaviour
 		}
 		for ( int i = 0; i < numRays; i++)
 		{
-			hitList.Add(Physics2D.Raycast(rayStart, rayEnd, (rayEnd - rayStart).magnitude, ignoreLayers));
+			hitList.Add(Physics2D.Raycast(rayStart, rayEnd, vision, ignoreLayers));
 			Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z), new Vector3(rayEnd.x, rayEnd.y, transform.position.z), Color.red);
 
 			if ( hitList[i].collider == null)
@@ -107,10 +112,34 @@ public class Lighting : MonoBehaviour
 				{
 					curentPos += increment;
 					ShowTile(curentPos);
-					if (curentPos.x > rayEnd.x - 0.05)
+					switch(facing)
 					{
-						done =true;
+					case (int)dir.UP:
+						if (curentPos.y > rayEnd.y)
+						{
+							done =true;
+						}
+						break;
+					case (int)dir.RIGHT:
+						if (curentPos.x > rayEnd.x)
+						{
+							done =true;
+						}
+						break;
+					case (int)dir.DOWN:
+						if (curentPos.y < rayEnd.y)
+						{
+							done =true;
+						}
+						break;
+					case (int)dir.LEFT:
+						if (curentPos.x < rayEnd.x)
+						{
+							done =true;
+						}
+						break;
 					}
+
 				}while(!done);
 			}
 			rayEnd += rayAdd;
@@ -140,7 +169,14 @@ public class Lighting : MonoBehaviour
 		{
 			for(int j = 0; j < maskSize.y; j++)
 			{
-					maskTiles[i,j].SetActive(true);				
+				if(lightingEnabled)
+				{
+					maskTiles[i,j].SetActive(true);
+				}
+				else
+				{
+					maskTiles[i,j].SetActive(false);
+				}
 			}
 		}
 	}

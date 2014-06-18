@@ -11,21 +11,21 @@ public class Player : Unit{
 	// Update is called once per frame
 	void Update () {
 		updateLoop();
-		if( Input.GetKey(KeyCode.LeftShift))
+		if( Input.GetAxis("Look") != 0)
 		{
-			if(Input.GetKeyDown(KeyCode.W))
+			if( Input.GetAxis("Vertical") > 0)
 			{
 				changeDir((int) dir.UP);
 			}
-			else if(Input.GetKeyDown(KeyCode.D))
+			else if( Input.GetAxis("Vertical") < 0)
 			{
 				changeDir((int) dir.RIGHT);
 			}
-			else if(Input.GetKeyDown(KeyCode.S))
+			else if( Input.GetAxis("Horizontal") < 0)
 			{
 				changeDir((int) dir.DOWN);
 			}
-			else if(Input.GetKeyDown(KeyCode.A))
+			else if(Input.GetAxis("Horizontal") > 0)
 			{
 				changeDir((int) dir.LEFT);
 			}
