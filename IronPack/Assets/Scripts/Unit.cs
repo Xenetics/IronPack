@@ -68,7 +68,7 @@ public class Unit : MonoBehaviour
 		rend = GetComponent<SpriteRenderer>();
 
 		targetPositon = transform.position;
-		facing = (int) dir.DOWN;
+		facing = (int) dir.UP;
 	}
 
 	public void updateLoop()
@@ -95,7 +95,6 @@ public class Unit : MonoBehaviour
 			}
 		}
 		//this will stop the unit from being anywere but on a grid point if it is not moving
-		/*this is doing nothing right now 
 		else if ( transform.position.y != Mathf.Round(transform.position.y) || transform.position.x != Mathf.Round(transform.position.x))
 		{
 			//moving = false;
@@ -104,7 +103,7 @@ public class Unit : MonoBehaviour
 			temp.x = Mathf.Round(temp.x);
 			transform.position = temp;
 			targetPositon = transform.position;
-		}*/
+		}
 	}
 
 	public void changeDir(int d)

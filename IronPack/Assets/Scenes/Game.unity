@@ -288,6 +288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mask: {fileID: 21300004, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 256
   target: {fileID: 365627261}
   facing: 0
 --- !u!4 &508651121

@@ -8,6 +8,8 @@ public class Lighting : MonoBehaviour
 
 	public Sprite mask;
 
+	public LayerMask ignoreLayers;
+
 	public GameObject target;
 	public int facing;
 
@@ -24,6 +26,8 @@ public class Lighting : MonoBehaviour
 		facing = target.GetComponent<Unit>().getFacing();
 		vision = target.GetComponent<Unit>().visionDistance;
 
+		ignoreLayers = ~ignoreLayers;
+
 		maskTiles = new GameObject[Mathf.RoundToInt(maskSize.x),Mathf.RoundToInt(maskSize.y)];
 
 		for(int i = 0; i < maskSize.x; i++)
@@ -37,8 +41,9 @@ public class Lighting : MonoBehaviour
 				//make the sprite for the tile
 				SpriteRenderer tileRend;
 				tileRend = tile.AddComponent("SpriteRenderer") as SpriteRenderer;
-				//tileRend.sprite = mask;
+				tileRend.sprite = mask;
 				tile.transform.parent = transform;
+				//tile.SetActive(false);
 				maskTiles[i,j] = tile;
 			}
 		}
@@ -46,9 +51,16 @@ public class Lighting : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () 
-	{
+	{	
+		if(target.transform.position.y == Mathf.Round(target.transform.position.y) && target.transform.position.x == Mathf.Round(target.transform.position.x))
+		{
+			resetVision();
+		}
+
 		facing = target.GetComponent<Unit>().getFacing();
 		vision = target.GetComponent<Unit>().visionDistance;
+
+		ShowTile(new Vector2(target.transform.position.x, target.transform.position.y));
 		//the vision value is the distance they can see, if 45 degree angle then the number of back tiles is ((vision * 2)- 1)
 		//raycast out from the player straight and also from the player to each block along the back of the vision distance
 
@@ -83,11 +95,73 @@ public class Lighting : MonoBehaviour
 		}
 		for ( int i = 0; i < numRays; i++)
 		{
-			hitList.Add(Physics2D.Raycast(rayStart, rayEnd, (rayEnd - rayStart).magnitude));
+			hitList.Add(Physics2D.Raycast(rayStart, rayEnd, (rayEnd - rayStart).magnitude, ignoreLayers));
 			Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z), new Vector3(rayEnd.x, rayEnd.y, transform.position.z), Color.red);
+
+			if ( hitList[i].collider == null)
+			{
+				bool done = false;
+				Vector2 increment = (rayEnd - rayStart).normalized;
+				Vector2 curentPos = rayStart;
+				do
+				{
+					curentPos += increment;
+					ShowTile(curentPos);
+					if (curentPos.x > rayEnd.x - 0.05)
+					{
+						done =true;
+					}
+				}while(!done);
+			}
 			rayEnd += rayAdd;
 		}
 	}
+
+	private void ShowTile(int posX, int posY)
+	{
+		Vector2 pos = new Vector2( posX, posY);
+		for(int i = 0; i < maskSize.x; i++)
+		{
+			for(int j = 0; j < maskSize.y; j++)
+			{
+				Vector2 maskPos = maskTiles[i,j].transform.position;
+				if( pos == maskPos)
+				{
+					maskTiles[i,j].SetActive(false);
+				}
+			}
+
+		}
+	}
+
+	private void resetVision()
+	{
+		for(int i = 0; i < maskSize.x; i++)
+		{
+			for(int j = 0; j < maskSize.y; j++)
+			{
+					maskTiles[i,j].SetActive(true);				
+			}
+		}
+	}
+
+	private void ShowTile(Vector2 input)
+	{
+		Vector2 pos = new Vector2(Mathf.Round(input.x), Mathf.Round(input.y));
+		for(int i = 0; i < maskSize.x; i++)
+		{
+			for(int j = 0; j < maskSize.y; j++)
+			{
+				Vector2 maskPos = maskTiles[i,j].transform.position;
+				if( pos == maskPos)
+				{
+					maskTiles[i,j].SetActive(false);
+				}
+			}
+			
+		}
+	}
+
 
 	void LateUpdate ()
 	{
