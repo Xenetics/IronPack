@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Camera : MonoBehaviour {
+public class CameraController : MonoBehaviour {
 
 	public GameObject target;
 	private float cameraSpeed = 1f;
@@ -14,7 +14,7 @@ public class Camera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey(KeyCode.Space))
+		if(Input.GetKey(KeyCode.LeftAlt))
 		{
 			if(Input.mousePosition.x < 3)
 			{

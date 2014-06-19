@@ -17,15 +17,15 @@ public class Player : Unit{
 			{
 				changeDir((int) dir.UP);
 			}
-			else if( Input.GetAxis("Vertical") < 0)
+			else if( Input.GetAxis("Horizontal") > 0)
 			{
 				changeDir((int) dir.RIGHT);
 			}
-			else if( Input.GetAxis("Horizontal") < 0)
+			else if( Input.GetAxis("Vertical") < 0)
 			{
 				changeDir((int) dir.DOWN);
 			}
-			else if(Input.GetAxis("Horizontal") > 0)
+			else if(Input.GetAxis("Horizontal") < 0)
 			{
 				changeDir((int) dir.LEFT);
 			}

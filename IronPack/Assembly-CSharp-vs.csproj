@@ -46,12 +46,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Camera.cs" />
-     <Compile Include="Assets\Scripts\Game Manager.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\LevelGenerator.cs" />
      <Compile Include="Assets\Scripts\Lighting.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Sensor.cs" />
+     <Compile Include="Assets\Scripts\States\GameState.cs" />
+     <Compile Include="Assets\Scripts\States\StateGamePlaying.cs" />
      <Compile Include="Assets\Scripts\Unit.cs" />
      <Compile Include="Assets\Scripts\Wolf.cs" />
   </ItemGroup>

@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightingEnabled: 1
-  mask: {fileID: 21300004, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
+  mask: {fileID: 21300000, guid: ab8d5905e41d45d4790425a24e22c9f4, type: 3}
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 256
@@ -728,3 +728,41 @@ MonoBehaviour:
   isColliding: 0
   ignoreThis: {fileID: 365627263}
   targets: []
+--- !u!1 &1892800861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1892800863}
+  - 114: {fileID: 1892800862}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1892800862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1892800861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ab65d047f82744c8ff3fb7af9d2321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1892800863
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1892800861}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.1944323, y: 25.0457439, z: -1.12524414}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}

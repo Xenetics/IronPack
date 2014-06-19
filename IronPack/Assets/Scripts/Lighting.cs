@@ -23,7 +23,6 @@ public class Lighting : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		//look at using draw.texture to do the texture rather then sprite shit
 		facing = target.GetComponent<Unit>().getFacing();
 		vision = target.GetComponent<Unit>().visionDistance;
 		cam = transform.parent;
@@ -66,7 +65,7 @@ public class Lighting : MonoBehaviour
 		vision = target.GetComponent<Unit>().visionDistance;
 
 		ShowTile(new Vector2(target.transform.position.x, target.transform.position.y));
-		//the vision value is the distance they can see, if 45 degree angle then the number of back tiles is ((vision * 2)- 1)
+		//the vision value is the distance they can see, if 45 degree angle then the number of back tiles is ((vision * 2) + 1)
 		//raycast out from the player straight and also from the player to each block along the back of the vision distance
 
 		int numRays = (vision* 2) + 1 ;
@@ -98,47 +97,51 @@ public class Lighting : MonoBehaviour
 			rayAdd.y = 1f;
 			break;
 		}
-		for ( int i = 0; i < numRays; i++)
+		for ( int i = 0; i < numRays; i++)//first and last raycast may not be needed, Consider removing
 		{
 			hitList.Add(Physics2D.Raycast(rayStart, rayEnd, vision, ignoreLayers));
 			Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z), new Vector3(rayEnd.x, rayEnd.y, transform.position.z), Color.red);
 
-			if ( hitList[i].collider == null)
+			//if ( hitList[i].collider == null)
 			{
 				bool done = false;
 				Vector2 increment = (rayEnd - rayStart).normalized;
+
 				Vector2 curentPos = rayStart;
 				do
 				{
 					curentPos += increment;
-					ShowTile(curentPos);
+
 					switch(facing)
 					{
 					case (int)dir.UP:
-						if (curentPos.y > rayEnd.y)
+						if (curentPos.y > rayEnd.y + 0.5f) 
 						{
 							done =true;
 						}
 						break;
 					case (int)dir.RIGHT:
-						if (curentPos.x > rayEnd.x)
+						if (curentPos.x > rayEnd.x + 0.5f)
 						{
 							done =true;
 						}
 						break;
 					case (int)dir.DOWN:
-						if (curentPos.y < rayEnd.y)
+						if (curentPos.y < rayEnd.y - 0.5f)
 						{
 							done =true;
 						}
 						break;
 					case (int)dir.LEFT:
-						if (curentPos.x < rayEnd.x)
+						if (curentPos.x < rayEnd.x - 0.5f)
 						{
 							done =true;
 						}
 						break;
 					}
+
+					if(!done){ShowTile(curentPos);}
+
 
 				}while(!done);
 			}
@@ -193,6 +196,7 @@ public class Lighting : MonoBehaviour
 				{
 					maskTiles[i,j].SetActive(false);
 				}
+
 			}
 			
 		}
