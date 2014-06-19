@@ -73,72 +73,80 @@ public class Unit : MonoBehaviour
 
 	public void updateLoop()
 	{
-		//make this not exact
-		if( !((targetPositon.x > transform.position.x - 0.05f && targetPositon.x < transform.position.x + 0.05f ) &&
-		   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f)) )
+		if(!GameManager.Instance.stateGamePlaying.IsPaused())
 		{
-			//moving = true;
-			transform.position += displacment * speed * 0.01f;
-			//Debug.Log ("zooooooooooooooooom");
+			if( !((targetPositon.x > transform.position.x - 0.05f && targetPositon.x < transform.position.x + 0.05f ) &&
+			   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f)) )
+			{
+				//moving = true;
+				transform.position += displacment * speed * 0.01f;
 
-			//animation stuff
-			Vector3 temp =  targetPositon - transform.position;
-			float animPercent = 1 - Mathf.Abs( temp.y + temp.x);//hacks?
-			if(animPercent > 0.95)
-			{
-				rend.sprite = standSprites[facing];
+				//animation stuff
+				Vector3 temp =  targetPositon - transform.position;
+				float animPercent = 1 - Mathf.Abs( temp.y + temp.x);//hacks?
+				if(animPercent > 0.95)
+				{
+					rend.sprite = standSprites[facing];
+				}
+				else if(animPercent > 0)
+				{
+					int animPos = Mathf.FloorToInt(walkSprites[facing].Length * animPercent);
+					rend.sprite = walkSprites[facing][animPos];
+				}
 			}
-			else if(animPercent > 0)
+			//this will stop the unit from being anywere but on a grid point if it is not moving
+			else if ( transform.position.y != Mathf.Round(transform.position.y) || transform.position.x != Mathf.Round(transform.position.x))
 			{
-				int animPos = Mathf.FloorToInt(walkSprites[facing].Length * animPercent);
-				rend.sprite = walkSprites[facing][animPos];
+				//moving = false;
+				Vector3 temp = transform.position;
+				temp.y = Mathf.Round(temp.y);
+				temp.x = Mathf.Round(temp.x);
+				transform.position = temp;
+				targetPositon = transform.position;
 			}
-		}
-		//this will stop the unit from being anywere but on a grid point if it is not moving
-		else if ( transform.position.y != Mathf.Round(transform.position.y) || transform.position.x != Mathf.Round(transform.position.x))
-		{
-			//moving = false;
-			Vector3 temp = transform.position;
-			temp.y = Mathf.Round(temp.y);
-			temp.x = Mathf.Round(temp.x);
-			transform.position = temp;
-			targetPositon = transform.position;
 		}
 	}
 
 	public void changeDir(int d)
 	{
-		if ( d >= 0 && d <= 3)
+		if(!GameManager.Instance.stateGamePlaying.IsPaused())
 		{
-			facing = d;
+			if ( d >= 0 && d <= 3)
+			{
+				facing = d;
+			}
+			rend.sprite = standSprites[facing];
+			//Lighting.Instance.resetVision();
 		}
-		rend.sprite = standSprites[facing];
 	}
 
 	public void move()
 	{
-		if((targetPositon.x > transform.position.x - 0.05f && targetPositon.x < transform.position.x + 0.05f ) &&
-		   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f) &&
-		   (!sensorScripts[facing].isColliding) )
+		if(!GameManager.Instance.stateGamePlaying.IsPaused())
 		{
-			switch(facing)
+			if((targetPositon.x > transform.position.x - 0.05f && targetPositon.x < transform.position.x + 0.05f ) &&
+			   (targetPositon.y > transform.position.y - 0.05f && targetPositon.y < transform.position.y + 0.05f) &&
+			   (!sensorScripts[facing].isColliding) )
 			{
-			case (int) dir.UP:
-				targetPositon.y += 1;
-				displacment = targetPositon - transform.position;
-				break;
-			case (int) dir.RIGHT:
-				targetPositon.x += 1;
-				displacment = targetPositon - transform.position;
-				break;
-			case (int) dir.DOWN:
-				targetPositon.y -= 1;
-				displacment = targetPositon - transform.position;
-				break;
-			case (int) dir.LEFT:
-				targetPositon.x -= 1;
-				displacment = targetPositon - transform.position;
-				break;
+				switch(facing)
+				{
+				case (int) dir.UP:
+					targetPositon.y += 1;
+					displacment = targetPositon - transform.position;
+					break;
+				case (int) dir.RIGHT:
+					targetPositon.x += 1;
+					displacment = targetPositon - transform.position;
+					break;
+				case (int) dir.DOWN:
+					targetPositon.y -= 1;
+					displacment = targetPositon - transform.position;
+					break;
+				case (int) dir.LEFT:
+					targetPositon.x -= 1;
+					displacment = targetPositon - transform.position;
+					break;
+				}
 			}
 		}
 	}

@@ -28,20 +28,7 @@ public class StateGamePlaying : GameState
 	{	
 		if(isPaused)
 		{
-			string[] names = QualitySettings.names;
-			string message = "Game Paused.";
-			GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
-			GUILayout.FlexibleSpace();
-			GUILayout.BeginHorizontal();
-			GUILayout.FlexibleSpace();
-			GUILayout.BeginVertical();
-			GUILayout.Label(message, GUILayout.Width(200));
-			
-			GUILayout.EndVertical();
-			GUILayout.FlexibleSpace();
-			GUILayout.EndHorizontal();
-			GUILayout.FlexibleSpace();
-			GUILayout.EndArea();
+			GUILayout.Label("state: GAME PLAYING  **PAUSED**");
 		}
 		else
 		{
@@ -59,5 +46,10 @@ public class StateGamePlaying : GameState
 	{
 		Time.timeScale = 0.0000001f;
 		isPaused = true;
+	}
+
+	public bool IsPaused()
+	{
+		return isPaused;
 	}
 }

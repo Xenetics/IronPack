@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class Lighting : MonoBehaviour 
 {
+	//singleton class stuff
+	public static Lighting Instance { get { return instance; } }
+	private static Lighting instance = null;
+
 	private enum dir {UP, RIGHT, DOWN, LEFT};
 
 	public bool lightingEnabled = true;
@@ -19,6 +23,21 @@ public class Lighting : MonoBehaviour
 	private int vision;
 	private Transform cam;
 	private GameObject[,] maskTiles;
+
+	private void Awake () 
+	{
+		//more singleton class stuff
+		if (instance != null && instance != this)
+		{
+			Destroy(this.gameObject);
+			return;        
+		} 
+		else 
+		{
+			instance = this;
+		}
+		DontDestroyOnLoad(this.gameObject);
+	}
 
 	// Use this for initialization
 	void Start () 
@@ -53,7 +72,7 @@ public class Lighting : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void FixedUpdate () 
 	{	
 		if( (target.transform.position.y == Mathf.Round(target.transform.position.y) && target.transform.position.x == Mathf.Round(target.transform.position.x))&&
 		    (cam.transform.position.y == Mathf.Round(cam.transform.position.y) && cam.transform.position.x == Mathf.Round(cam.transform.position.x)) )
@@ -166,7 +185,7 @@ public class Lighting : MonoBehaviour
 		}
 	}
 
-	private void resetVision()
+	public void resetVision()
 	{
 		for(int i = 0; i < maskSize.x; i++)
 		{

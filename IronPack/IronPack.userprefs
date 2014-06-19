@@ -1,10 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\States\StateGamePlaying.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Unit.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameManager.cs" Line="19" Column="2" />
-      <File FileName="Assets\Scripts\States\StateGamePlaying.cs" Line="14" Column="37" />
-      <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="15" Column="1" />
+      <File FileName="Assets\Scripts\States\StateGamePlaying.cs" Line="10" Column="38" />
+      <File FileName="Assets\Scripts\Player.cs" Line="48" Column="5" />
+      <File FileName="Assets\Scripts\Options.cs" Line="35" Column="3" />
+      <File FileName="Assets\Scripts\Unit.cs" Line="76" Column="56" />
+      <File FileName="Assets\Scripts\Lighting.cs" Line="75" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

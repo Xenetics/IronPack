@@ -3,12 +3,30 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour 
 {
+	//singleton class stuff
+	public static GameManager Instance { get { return instance; } }
+	private static GameManager instance = null;
+
 	private GameState currentState;
+	//declare game states
 	public StateGamePlaying stateGamePlaying{get;set;}
 
-	
+
 	private void Awake () 
 	{
+		//more singleton class stuff
+		if (instance != null && instance != this)
+		{
+			Destroy(this.gameObject);
+			return;        
+		} 
+		else 
+		{
+			instance = this;
+		}
+		DontDestroyOnLoad(this.gameObject);
+
+		//initalize game states
 		stateGamePlaying = new StateGamePlaying(this);
 	}
 	
