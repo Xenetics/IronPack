@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   - 61: {fileID: 6100000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sensor Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400002}
   - 61: {fileID: 6100002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sensor Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400004}
   - 61: {fileID: 6100004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sensor Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400006}
   - 61: {fileID: 6100006}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sensor Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - 114: {fileID: 11400008}
   - 61: {fileID: 6100008}
   - 50: {fileID: 5000000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,33 +285,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPower: 0
   health: 0
-  speed: 10
+  speed: 4
   defence: 0
-  visionDistance: 3
-  faceUp: {fileID: 21300000, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  faceRight: {fileID: 21300002, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  faceDown: {fileID: 21300004, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  faceLeft: {fileID: 21300006, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  visionDistance: 4
+  faceUp: {fileID: 21300056, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  faceRight: {fileID: 21300064, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  faceDown: {fileID: 21300048, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  faceLeft: {fileID: 21300006, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   walkUp:
-  - {fileID: 21300008, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300010, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300012, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300014, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300056, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300058, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300060, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300062, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   walkRight:
-  - {fileID: 21300016, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300018, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300020, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300022, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300040, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300042, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300044, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300046, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   walkDown:
-  - {fileID: 21300024, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300026, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300028, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300030, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300048, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300050, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300052, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300054, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   walkLeft:
-  - {fileID: 21300032, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300034, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300036, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  - {fileID: 21300038, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  - {fileID: 21300038, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300036, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300034, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300032, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   sensorUp: {fileID: 100004}
   sensorRight: {fileID: 100006}
   sensorDown: {fileID: 100002}
@@ -337,7 +337,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  m_Sprite: {fileID: 21300056, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

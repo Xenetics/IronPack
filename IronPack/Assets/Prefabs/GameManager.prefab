@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: Level Generator
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23,7 +23,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.77616048, y: -.263794571, z: 0}
+  m_LocalPosition: {x: 11.1944323, y: 25.0457439, z: -1.12524414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -35,17 +35,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4720c4c229224eb40b14e6c5782142f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 69ab65d047f82744c8ff3fb7af9d2321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRoomSize: {x: 10, y: 10}
-  maxRoomSize: {x: 15, y: 15}
-  maxRooms: 1
-  tiles:
-    wall: {fileID: 21300002, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
-    floor: {fileID: 21300000, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
-    door: {fileID: 21300024, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-    blank: {fileID: 21300038, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

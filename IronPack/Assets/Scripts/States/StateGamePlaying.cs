@@ -6,7 +6,14 @@ public class StateGamePlaying : GameState
 	
 	public StateGamePlaying(GameManager manager):base(manager){	}
 	
-	public override void OnStateEntered(){}
+	public override void OnStateEntered()
+	{
+		//game start
+		GameObject player = UnitManager.Instance.SpawnPlayer();
+
+		Lighting.Instance.target = player;
+		Lighting.Instance.setCameraTarget(player);
+	}
 	public override void OnStateExit(){}
 	
 	public override void StateUpdate() 

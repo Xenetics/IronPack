@@ -111,7 +111,7 @@ public class Unit : MonoBehaviour
 	{
 		if(!GameManager.Instance.stateGamePlaying.IsPaused())
 		{
-			if ( d >= 0 && d <= 3)
+			if( d >= 0 && d <= 3)
 			{
 				facing = d;
 			}

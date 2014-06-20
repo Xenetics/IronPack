@@ -7,6 +7,7 @@ public class Player : Unit{
 	void Start () {
 		startFunc();
 	}
+
 	
 	// Update is called once per frame
 	void Update () {

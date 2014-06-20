@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\States\GameState.cs" />
      <Compile Include="Assets\Scripts\States\StateGamePlaying.cs" />
      <Compile Include="Assets\Scripts\Unit.cs" />
+     <Compile Include="Assets\Scripts\UnitManager.cs" />
      <Compile Include="Assets\Scripts\Wolf.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

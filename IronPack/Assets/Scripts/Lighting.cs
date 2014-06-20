@@ -21,8 +21,13 @@ public class Lighting : MonoBehaviour
 
 
 	private int vision;
-	private Transform cam;
+	private GameObject cam;
 	private GameObject[,] maskTiles;
+
+	public void setCameraTarget(GameObject input)
+	{
+		cam.GetComponent<CameraController>().target = input;
+	}
 
 	private void Awake () 
 	{
@@ -44,7 +49,7 @@ public class Lighting : MonoBehaviour
 	{
 		facing = target.GetComponent<Unit>().getFacing();
 		vision = target.GetComponent<Unit>().visionDistance;
-		cam = transform.parent;
+		cam = transform.parent.gameObject;
 		ignoreLayers = ~ignoreLayers;
 
 		maskTiles = new GameObject[Mathf.RoundToInt(maskSize.x),Mathf.RoundToInt(maskSize.y)];
@@ -72,7 +77,7 @@ public class Lighting : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () 
+	void LateUpdate () 
 	{	
 		if( (target.transform.position.y == Mathf.Round(target.transform.position.y) && target.transform.position.x == Mathf.Round(target.transform.position.x))&&
 		    (cam.transform.position.y == Mathf.Round(cam.transform.position.y) && cam.transform.position.x == Mathf.Round(cam.transform.position.x)) )
@@ -219,12 +224,6 @@ public class Lighting : MonoBehaviour
 			}
 			
 		}
-	}
-
-
-	void LateUpdate ()
-	{
-
 	}
 	
 }
