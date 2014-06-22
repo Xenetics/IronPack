@@ -14,7 +14,7 @@ public class Lighting : MonoBehaviour
 	public Sprite mask;
 	public LayerMask ignoreLayers;
 
-	public GameObject target;
+	private GameObject target;
 	public int facing;
 
 	public Vector2 maskSize = new Vector2(16f, 9f);
@@ -27,6 +27,13 @@ public class Lighting : MonoBehaviour
 	public void setCameraTarget(GameObject input)
 	{
 		cam.GetComponent<CameraController>().target = input;
+	}
+
+	public void setTarget(GameObject input)
+	{
+		target = input;
+		facing = target.GetComponent<Unit>().getFacing();
+		vision = target.GetComponent<Unit>().visionDistance;
 	}
 
 	private void Awake () 
@@ -45,10 +52,8 @@ public class Lighting : MonoBehaviour
 	}
 
 	// Use this for initialization
-	void Start () 
+	public void StartGame () 
 	{
-		facing = target.GetComponent<Unit>().getFacing();
-		vision = target.GetComponent<Unit>().visionDistance;
 		cam = transform.parent.gameObject;
 		ignoreLayers = ~ignoreLayers;
 
@@ -60,7 +65,7 @@ public class Lighting : MonoBehaviour
 			{
 				//make tile and move it in to place
 				GameObject tile = new GameObject();
-				tile.transform.position = new Vector3(transform.position.x + i - Mathf.Floor(maskSize.x * 0.5f), transform.position.y + j - Mathf.Floor(maskSize.y * 0.5f), transform.position.z + 0.5f);
+				tile.transform.position = new Vector3(transform.position.x + i - Mathf.Floor(maskSize.x * 0.5f), transform.position.y + j - Mathf.Floor(maskSize.y * 0.5f), transform.position.z);
 				
 				//make the sprite for the tile
 				SpriteRenderer tileRend;

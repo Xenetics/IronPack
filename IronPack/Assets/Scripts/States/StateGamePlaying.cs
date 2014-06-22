@@ -9,9 +9,11 @@ public class StateGamePlaying : GameState
 	public override void OnStateEntered()
 	{
 		//game start
+		Lighting.Instance.StartGame();
+
 		GameObject player = UnitManager.Instance.SpawnPlayer();
 
-		Lighting.Instance.target = player;
+		Lighting.Instance.setTarget(player);
 		Lighting.Instance.setCameraTarget(player);
 	}
 	public override void OnStateExit(){}

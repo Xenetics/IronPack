@@ -12,6 +12,12 @@ public class Player : Unit{
 	// Update is called once per frame
 	void Update () {
 		updateLoop();
+		if(Input.GetKeyDown(KeyCode.B))
+		{
+			UnitManager.Instance.BuildWolf();
+		}
+
+
 		if( Input.GetAxis("Look") != 0)
 		{
 			if( Input.GetAxis("Vertical") > 0)

@@ -1,0 +1,256 @@
+fileFormatVersion: 2
+guid: bb9714bfb46891d45a0a8e2e39b2b87a
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: CharcterSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 781
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 781
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 781
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 781
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 670
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 671
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 672
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 673
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 557
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 558
+        width: 67
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 556
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 557
+        width: 63
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 441
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 446
+        width: 67
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 446
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 449
+        width: 63
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 333
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 220
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_18
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 220
+        width: 67
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_19
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 113
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_20
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 113
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_21
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 5
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: CharcterSpriteSheet_22
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 5
+        width: 63
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+  spritePackingTag: 
+  userData: 

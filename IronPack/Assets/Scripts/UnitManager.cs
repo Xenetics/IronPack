@@ -10,24 +10,62 @@ public class UnitManager : MonoBehaviour
 
 	//public's
 	public GameObject playerPrefab;
+	public GameObject grayWolfPrefab;
+	public int maxWolves = 8;
 
 	//privates		heh
-	private List<GameObject> enemys;
+	private List<GameObject> enemies ;
 	private GameObject player;
-	private List<GameObject> wolfs;
+	private List<GameObject> wolves;
 
-	public GameObject SpawnPlayer()
+	public List<GameObject> getEnemies()
+	{
+		return enemies;
+	}
+
+	public GameObject BuildWolf()
+	{
+		if( wolves.Count < maxWolves)
+		{
+			Vector3 spawnPos = player.transform.position;
+			spawnPos.x += 1f;
+			GameObject ret = Instantiate(grayWolfPrefab, spawnPos, Quaternion.identity) as GameObject;
+			wolves.Add(ret); 
+			return ret;
+		}
+		return null;
+	}
+
+	public GameObject getPlayer()
+	{
+		return player;
+	}
+
+	public GameObject SpawnPlayer(Vector3 spawnPos)
 	{
 		if(player == null)
 		{
-			player = Instantiate(playerPrefab, new Vector3(3f, 3f, -2f), Quaternion.identity) as GameObject;
+			player = Instantiate(playerPrefab, spawnPos, Quaternion.identity) as GameObject;
 
 			return player;
 		}
 		return null;
 	}
 
-	void Start () {
+	public GameObject SpawnPlayer()
+	{
+		Vector3 spawnPos = new Vector3(3f, 3f, -2f);
+		if(player == null)
+		{
+			player = Instantiate(playerPrefab, spawnPos, Quaternion.identity) as GameObject;
+			
+			return player;
+		}
+		return null;
+	}
+
+	void Awake()
+	{
 		//more singleton class stuff
 		if (instance != null && instance != this)
 		{
@@ -39,8 +77,13 @@ public class UnitManager : MonoBehaviour
 			instance = this;
 		}
 		DontDestroyOnLoad(this.gameObject);
+	}
 
+	void Start () 
+	{
 		//initialization
+		wolves = new List<GameObject>();
+		enemies = new List<GameObject>();
 	}
 
 

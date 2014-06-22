@@ -31,10 +31,10 @@ public class Unit : MonoBehaviour
 
 	private SpriteRenderer rend;
 
-	private GameObject[] Sensors;
-	private Sensor[] sensorScripts;
+	protected GameObject[] Sensors;
+	protected Sensor[] sensorScripts;
 
-	private int facing;
+	protected int facing;
 
 	private Vector3 targetPositon;
 	private Vector3 displacment;
@@ -118,6 +118,29 @@ public class Unit : MonoBehaviour
 			rend.sprite = standSprites[facing];
 			//Lighting.Instance.resetVision();
 		}
+	}
+
+	public void changeDir(Vector3 face)
+	{
+		//needs to be improved lots
+		if( transform.position.y > face.y)
+		{
+			facing = 0;
+		}
+		else if( transform.position.x > face.x)
+		{
+			facing = 1;
+		}
+		else if( transform.position.y < face.y)
+		{
+			facing = 2;
+		}
+		else if( transform.position.x < face.x)
+		{
+			facing = 3;
+		}
+
+		rend.sprite = standSprites[facing];
 	}
 
 	public void move()
