@@ -1,18 +1,12 @@
-﻿using UnityEngine;
+﻿/* to do
+ * make enemy target player first when attacking
+ */
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Wolf : Unit
-{
-
-	public enum State{
-		aggressive, defensive, passiveAggressive, passive
-	}
-
-	public State currentState;
-	public int followDistance = 3; //rename this varable
-
-	private Transform player;
+public class Enemy : Unit {
 
 	private List<Transform> enemies;
 
@@ -21,16 +15,18 @@ public class Wolf : Unit
 	{
 		startFunc();
 		enemies = new List<Transform>();
-		player = UnitManager.Instance.getPlayer().transform;
 	}
 
 	private void UpdateEnemies()
 	{
-		List<GameObject> temp =  UnitManager.Instance.getEnemies();
+		List<GameObject> temp =  UnitManager.Instance.getWolves();
+		temp.Add(UnitManager.Instance.getPlayer());
+		temp.Reverse();//puts player first to try and go for player first, not sure if this works as intended.
+
 		for(int i = 0; i < temp.Count; i++)
 		{
 			float distance = (temp[i].transform.position - transform.position).magnitude;
-
+			
 			if (distance <  visionDistance)
 			{
 				enemies.Add(temp[i].transform);
@@ -38,14 +34,15 @@ public class Wolf : Unit
 		}
 	}
 
-	private bool tryAttack() //maybe merge this in to attack too to make it more effecnient 
+	private bool TryAttack() //maybe merge this in to attack too to make it more effecnient 
 	{
+		//make is focus player
 		//if all empty then return flase
 		if (!sensorScripts[0].isColliding && !sensorScripts[1].isColliding && !sensorScripts[2].isColliding && !sensorScripts[3].isColliding)
 		{
 			return false;
 		}
-
+		
 		for(int i = 0; i < enemies.Count; i++)
 		{
 			if (sensorScripts[0].targets.Count > 0 && sensorScripts[0].targets[0].transform == enemies[i])
@@ -71,66 +68,30 @@ public class Wolf : Unit
 		}
 		return false;
 	}
-	
+
 	// Update is called once per frame
-	void Update ()
+	void Update () 
 	{
 		updateLoop();
 		//move this to an optimized place
 		UpdateEnemies();
 
-		if(true/* no command present */)
+		if(!TryAttack())
 		{
-			switch((int)currentState)
+			if(enemies.Count > 0)
 			{
-			case (int)State.aggressive:
-				if(tryAttack())
-				{}
-				if(enemies.Count > 0)
-				{
-					changeDirFacing(enemies[0].transform.position);
-					move ();
-				}
-				else
-				{
-					changeDir(Random.Range(0, 4));
-					move ();
-					//ranom direction?
-					//maybe moves away from player untill a ceritan range
-				}
-				break;
-
-			case (int)State.defensive:
-				if( Mathf.Abs((player.transform.position - transform.position).magnitude) > followDistance)
-				{
-					changeDirFacing(player.position);
-					move ();
-				}
-				else if(tryAttack())
-				{}
-				else
-				{
-
-				}
-				break;
-
-			case (int)State.passive:
-				//does nothing
-				//maybe move away from enemy 
-				//for some reason this makes thewolf run away
-				if( (enemies[0].position - transform.position).magnitude < followDistance)
-				{
-					changeDirAway(enemies[0].position);
-					move ();
-				}
-				break;
-
-			case (int)State.passiveAggressive:
-				if(tryAttack())
-				{}
-				break;
+				//move to enemy
+				changeDirFacing(enemies[0].transform.position);
+				move ();
 			}
-		}
-	}
+			else
+			{
+				//random movment
+				changeDir(Random.Range(0, 4));
+				move ();
+			}
 
+		}
+
+	}
 }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour {
+	public static LevelGenerator Instance { get { return instance; } }
+	private static LevelGenerator instance = null;
 
 	[System.Serializable]
 	public class Tiles
@@ -32,7 +34,22 @@ public class LevelGenerator : MonoBehaviour {
 	public Tiles tiles;
 
 	//private vars
-	private List<Room> rooms = new List<Room>();
+	private List<Room> rooms = new List<Room>(); 
+
+	void Awake()
+	{
+		//more singleton class stuff
+		if (instance != null && instance != this)
+		{
+			Destroy(this.gameObject);
+			return;        
+		} 
+		else 
+		{
+			instance = this;
+		}
+		DontDestroyOnLoad(this.gameObject);
+	}
 
 	// Use this for initialization
 	void Start () 
@@ -482,8 +499,22 @@ public class LevelGenerator : MonoBehaviour {
 		return room;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public Vector3 getRandomPosition()
+	{
+		Vector3 ret;
+		int room;
+		int tile;
+		do
+		{
+			room = Random.Range(0, rooms.Count);
+			
+			tile = Random.Range(0, rooms[room].tiles.Length);
+			ret = (rooms[room].tiles[tile].transform.position);
+			
+		}while(ret.x == rooms[room].pos.x ||
+		       ret.y == rooms[room].pos.y ||
+		       ret.x == rooms[room].pos.x + rooms[room].size.x -1 ||
+		       ret.y == rooms[room].pos.y + rooms[room].size.y -1 );
+		return ret;
 	}
 }

@@ -133,6 +133,10 @@ Prefab:
       propertyPath: m_HDR
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 8f2358b57bf7fcf4c8159340dbe582fe, type: 2}
+      propertyPath: lightingEnabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8f2358b57bf7fcf4c8159340dbe582fe, type: 2}
   m_RootGameObject: {fileID: 747027890}
@@ -206,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddf8086c7d98894da5e52dc61ee713d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightingEnabled: 1
+  lightingEnabled: 0
   mask: {fileID: 21300000, guid: ab8d5905e41d45d4790425a24e22c9f4, type: 3}
   ignoreLayers:
     serializedVersion: 2
@@ -353,6 +357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 100008, guid: 6c7985698b783a946814ff4e7f9777a9, type: 2}
   grayWolfPrefab: {fileID: 100008, guid: 531878d4cdae0c746b97ca7a79df2a40, type: 2}
+  enemyPrefab: {fileID: 100008, guid: deafbc18f877b844fa65f83aa341b4e3, type: 2}
   maxWolves: 8
 --- !u!4 &1008453866
 Transform:
@@ -447,6 +452,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: d20cf52b29a403240806b3d6bb9c8e20, type: 2}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 100008, guid: deafbc18f877b844fa65f83aa341b4e3, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d20cf52b29a403240806b3d6bb9c8e20, type: 2}
   m_RootGameObject: {fileID: 1008453864}

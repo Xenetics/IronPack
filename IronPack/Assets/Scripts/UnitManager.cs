@@ -11,6 +11,7 @@ public class UnitManager : MonoBehaviour
 	//public's
 	public GameObject playerPrefab;
 	public GameObject grayWolfPrefab;
+	public GameObject enemyPrefab;
 	public int maxWolves = 8;
 
 	//privates		heh
@@ -23,6 +24,10 @@ public class UnitManager : MonoBehaviour
 		return enemies;
 	}
 
+	public List<GameObject> getWolves()
+	{
+		return wolves;
+	}
 	public GameObject BuildWolf()
 	{
 		if( wolves.Count < maxWolves)
@@ -86,10 +91,20 @@ public class UnitManager : MonoBehaviour
 		enemies = new List<GameObject>();
 	}
 
-
+	public GameObject SpawnEnemy()
+	{
+		Vector3 spawnPos = LevelGenerator.Instance.getRandomPosition();
+		spawnPos.z = -2f;
+		GameObject ret = Instantiate(enemyPrefab, spawnPos, Quaternion.identity) as GameObject;
+		enemies.Add(ret); 
+		return ret;
+	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Input.GetKeyDown(KeyCode.E))
+		{
+			SpawnEnemy();
+		}
 	}
 }

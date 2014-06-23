@@ -316,6 +316,8 @@ MonoBehaviour:
   sensorRight: {fileID: 100000}
   sensorDown: {fileID: 100004}
   sensorLeft: {fileID: 100006}
+  currentState: 0
+  cutOffDistance: 2
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
