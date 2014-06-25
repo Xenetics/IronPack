@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Player
+  m_Name: Wolf
   serializedVersion: 2
   m_AnimatorParameters:
   - m_Name: Direction
@@ -593,36 +593,9 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110224288}
-      second: []
-    data:
-      first: {fileID: 110256115}
+      first: {fileID: 0}
       second:
-      - {fileID: 110103952}
-      - {fileID: 110155571}
-      - {fileID: 110119957}
-      - {fileID: 110137552}
-    data:
-      first: {fileID: 110217486}
-      second:
-      - {fileID: 110122815}
-      - {fileID: 110188192}
-      - {fileID: 110166178}
-      - {fileID: 110112987}
-    data:
-      first: {fileID: 110284403}
-      second:
-      - {fileID: 110112001}
-      - {fileID: 110167333}
-      - {fileID: 110124319}
-      - {fileID: 110173206}
-    data:
-      first: {fileID: 110215159}
-      second:
-      - {fileID: 110191786}
-      - {fileID: 110109671}
-      - {fileID: 110170864}
-      - {fileID: 110123297}
+      - {fileID: 110116155}
     data:
       first: {fileID: 110200000}
       second:
@@ -631,9 +604,36 @@ StateMachine:
       - {fileID: 110117539}
       - {fileID: 110143692}
     data:
-      first: {fileID: 0}
+      first: {fileID: 110215159}
       second:
-      - {fileID: 110116155}
+      - {fileID: 110191786}
+      - {fileID: 110109671}
+      - {fileID: 110170864}
+      - {fileID: 110123297}
+    data:
+      first: {fileID: 110284403}
+      second:
+      - {fileID: 110112001}
+      - {fileID: 110167333}
+      - {fileID: 110124319}
+      - {fileID: 110173206}
+    data:
+      first: {fileID: 110217486}
+      second:
+      - {fileID: 110122815}
+      - {fileID: 110188192}
+      - {fileID: 110166178}
+      - {fileID: 110112987}
+    data:
+      first: {fileID: 110256115}
+      second:
+      - {fileID: 110103952}
+      - {fileID: 110155571}
+      - {fileID: 110119957}
+      - {fileID: 110137552}
+    data:
+      first: {fileID: 110224288}
+      second: []
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 540, y: -108, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
