@@ -28,6 +28,7 @@ public class UnitManager : MonoBehaviour
 	{
 		return wolves;
 	}
+
 	public GameObject BuildWolf()
 	{
 		if( wolves.Count < maxWolves)

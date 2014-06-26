@@ -341,6 +341,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 785230970}
   - 114: {fileID: 785230969}
+  - 114: {fileID: 785230971}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -359,9 +360,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132a46b907cd46d4cbfc392533ecd019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundTexture: {fileID: 0}
   menuButtonX: .889999986
   menuButtonY: .889999986
-  backgroundTexture: {fileID: 0}
 --- !u!4 &785230970
 Transform:
   m_ObjectHideFlags: 0
@@ -374,6 +375,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &785230971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 785230968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46f16dd23851e0a4eac827c6130b8ccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radialShow: 0
+  backgroundTexture: {fileID: 0}
+  menuButtonX: 0
+  menuButtonY: 0
 --- !u!1 &1008453864
 GameObject:
   m_ObjectHideFlags: 0

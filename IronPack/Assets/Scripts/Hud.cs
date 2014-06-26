@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Hud : MonoBehaviour 
 {
 	// Use this for initialization
 	void Start () 
 	{
-	
+
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-	
+
 	}
 
 	public Texture backgroundTexture;
@@ -22,13 +23,12 @@ public class Hud : MonoBehaviour
 
 	void OnGUI()
 	{
-		GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height),backgroundTexture);
+		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), backgroundTexture);
+	
 
-		if (GUI.Button (new Rect (Screen.width * menuButtonX, Screen.height * menuButtonY, Screen.width * .1f, Screen.height * .1f), "Menu"))
+		if (GUI.Button (new Rect (Screen.width * menuButtonX, Screen.height * menuButtonY, Screen.width * .1f, Screen.height * .1f), "Menu")) 
 		{
-			print("Clicked Menu");
+				print ("Clicked Menu");
 		}
-
 	}
-
 }
