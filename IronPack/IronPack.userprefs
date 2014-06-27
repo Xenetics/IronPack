@@ -1,18 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Radial.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Hud.cs">
     <Files>
-      <File FileName="Assets\Scripts\Unit.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Unit.cs" Line="104" Column="90" />
       <File FileName="Assets\Scripts\States\StateGamePlaying.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Lighting.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\UnitManager.cs" Line="32" Column="25" />
-      <File FileName="Assets\Scripts\Player.cs" Line="23" Column="17" />
+      <File FileName="Assets\Scripts\UnitManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Sensor.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Wolf.cs" Line="51" Column="31" />
-      <File FileName="Assets\Scripts\Enemy.cs" Line="22" Column="25" />
+      <File FileName="Assets\Scripts\Wolf.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\LevelGenerator.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Hud.cs" Line="31" Column="5" />
-      <File FileName="Assets\Scripts\Radial.cs" Line="31" Column="4" />
+      <File FileName="Assets\Scripts\Hud.cs" Line="10" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
