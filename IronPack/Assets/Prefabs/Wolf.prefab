@@ -80,7 +80,6 @@ GameObject:
   - 114: {fileID: 11400008}
   - 61: {fileID: 6100008}
   - 50: {fileID: 5000000}
-  - 95: {fileID: 9500000}
   m_Layer: 9
   m_Name: Wolf
   m_TagString: Untagged
@@ -217,20 +216,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .899999976, y: .899999976}
   m_Center: {x: 0, y: 0}
---- !u!95 &9500000
-Animator:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 41c6fe1002cbf2045bea8e136ba94e0a, type: 2}
-  m_CullingMode: 0
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
-  m_HasTransformHierarchy: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,12 +292,32 @@ MonoBehaviour:
   faceRight: {fileID: 21300064, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   faceDown: {fileID: 21300048, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   faceLeft: {fileID: 21300006, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  walkUp:
+  - {fileID: 21300056, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300058, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300060, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300062, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  walkRight:
+  - {fileID: 21300040, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300042, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300044, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300046, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  walkDown:
+  - {fileID: 21300048, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300050, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300052, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300054, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  walkLeft:
+  - {fileID: 21300038, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300036, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300034, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
+  - {fileID: 21300032, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
   sensorUp: {fileID: 100002}
   sensorRight: {fileID: 100000}
   sensorDown: {fileID: 100004}
   sensorLeft: {fileID: 100006}
   currentState: 0
-  followDistance: 3
+  cutOffDistance: 2
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -335,7 +340,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300056, guid: ea360c418309cff49a2fb032908ccc69, type: 3}
-  m_Color: {r: .499455571, g: .443711966, b: .735294104, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

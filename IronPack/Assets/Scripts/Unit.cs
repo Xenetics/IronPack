@@ -21,23 +21,21 @@ public class Unit : MonoBehaviour
 	public Sprite faceRight;
 	public Sprite faceDown;
 	public Sprite faceLeft;
-	/*
+
 	public Sprite[] walkUp;
 	public Sprite[] walkRight;
 	public Sprite[] walkDown;
 	public Sprite[] walkLeft;
-	*/
-	private Sprite[] standSprites;
-
-	//private Sprite[] [] walkSprites;
-
-	private SpriteRenderer rend;
-
 
 	public GameObject sensorUp;
 	public GameObject sensorRight;
 	public GameObject sensorDown;
 	public GameObject sensorLeft;
+
+	private Sprite[] standSprites;
+	private Sprite[] [] walkSprites;
+
+	private SpriteRenderer rend;
 
 	protected GameObject[] Sensors;
 	protected Sensor[] sensorScripts;
@@ -57,7 +55,7 @@ public class Unit : MonoBehaviour
 	public void startFunc()
 	{
 		standSprites = new Sprite[]{faceUp, faceRight, faceDown, faceLeft};
-		//walkSprites = new Sprite[][]{walkUp, walkRight, walkDown, walkLeft};
+		walkSprites = new Sprite[][]{walkUp, walkRight, walkDown, walkLeft};
 		animController = this.GetComponent<Animator>();
 
 
