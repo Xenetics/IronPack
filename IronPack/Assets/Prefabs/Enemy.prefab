@@ -80,7 +80,6 @@ GameObject:
   - 61: {fileID: 6100000}
   - 114: {fileID: 11400000}
   - 50: {fileID: 5000000}
-  - 95: {fileID: 9500000}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -217,20 +216,6 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_Size: {x: .899999976, y: .899999976}
   m_Center: {x: -1, y: 0}
---- !u!95 &9500000
-Animator:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 79ede606a33449047a8cc6e80fce3ae6, type: 2}
-  m_CullingMode: 0
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
-  m_HasTransformHierarchy: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -251,6 +236,14 @@ MonoBehaviour:
   faceRight: {fileID: 21300002, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
   faceDown: {fileID: 21300004, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
   faceLeft: {fileID: 21300006, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkUp:
+  - {fileID: 21300000, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkRight:
+  - {fileID: 21300002, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkDown:
+  - {fileID: 21300004, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  walkLeft:
+  - {fileID: 21300006, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
   sensorUp: {fileID: 100004}
   sensorRight: {fileID: 100006}
   sensorDown: {fileID: 100002}
