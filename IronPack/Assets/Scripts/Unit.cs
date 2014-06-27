@@ -161,25 +161,52 @@ public class Unit : MonoBehaviour
 
 	public void changeDirFacing(Vector3 face)
 	{
-		//needs to be improved lots
-		if( transform.position.y < face.y)
-		{
-			facing = 0;
-		}
-		else if( transform.position.x < face.x)
+		//this is stil bugged. needs cases for directly north south east west.
+		float deg = GetVectorDirection(face - transform.position);
+		Debug.Log(deg);
+		if(deg > 315 && deg < 45)
 		{
 			facing = 1;
+			//Debug.Log ("Right");
 		}
-		else if( transform.position.y > face.y)
+		else if(deg > 45 && deg < 135)
 		{
-			facing = 2;
+			facing = 0;
+			//Debug.Log ("Up");
 		}
-		else if( transform.position.x >face.x)
+		else if(deg > 135 && deg < 225)
 		{
 			facing = 3;
+			//Debug.Log ("Left");
 		}
-		
+		else if(deg > 225 && deg < 315)
+		{
+			facing = 2;
+			//Debug.Log ("Down");
+		}
 		rend.sprite = standSprites[facing];
+	}
+	
+	private float GetVectorDirection(Vector2 v)
+	{
+		float ret = 0;
+		if(v.x > 0 && v.y > 0) //Q1
+		{
+			ret =  Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
+		}
+		else if(v.x > 0 &&  v.y < 0) //Q2
+		{
+			ret = 360 + Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
+		}
+		else if(v.x < 0 &&  v.y < 0) //Q3
+		{
+			ret = 180 + Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
+		}
+		else if(v.x < 0 &&  v.y > 0)//Q4
+		{
+			ret = 90 - (-Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x)) - 90);
+		}
+		return ret;
 	}
 
 	public void move()
