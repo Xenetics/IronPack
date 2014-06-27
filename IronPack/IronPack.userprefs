@@ -1,7 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
 <<<<<<< HEAD
-<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Radial.cs">
     <Files>
       <File FileName="Assets\Scripts\Unit.cs" Line="1" Column="1" />
@@ -21,22 +20,12 @@
       <File FileName="Assets\Scripts\Unit.cs" Line="105" Column="22" />
       <File FileName="Assets\Scripts\States\StateGamePlaying.cs" Line="16" Column="39" />
       <File FileName="Assets\Scripts\Lighting.cs" Line="1" Column="1" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Unit.cs">
-    <Files>
-      <File FileName="Assets\Scripts\Unit.cs" Line="105" Column="22" />
-      <File FileName="Assets\Scripts\States\StateGamePlaying.cs" Line="16" Column="39" />
-      <File FileName="Assets\Scripts\Lighting.cs" Line="1" Column="1" />
->>>>>>> parent of 58486c7... More animation changes
       <File FileName="Assets\Scripts\UnitManager.cs" Line="97" Column="19" />
       <File FileName="Assets\Scripts\Player.cs" Line="17" Column="37" />
       <File FileName="Assets\Scripts\Sensor.cs" Line="9" Column="31" />
       <File FileName="Assets\Scripts\Wolf.cs" Line="106" Column="5" />
       <File FileName="Assets\Scripts\Enemy.cs" Line="48" Column="1" />
       <File FileName="Assets\Scripts\LevelGenerator.cs" Line="21" Column="18" />
-<<<<<<< HEAD
->>>>>>> parent of 58486c7... More animation changes
-=======
 >>>>>>> parent of 58486c7... More animation changes
     </Files>
   </MonoDevelop.Ide.Workbench>
