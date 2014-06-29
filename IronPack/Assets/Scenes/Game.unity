@@ -404,9 +404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4720c4c229224eb40b14e6c5782142f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRoomSize: {x: 40, y: 40}
+  minRoomSize: {x: 10, y: 10}
   maxRoomSize: {x: 50, y: 50}
-  maxRooms: 1
+  maxRooms: 10
   tiles:
     wall: {fileID: 21300002, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
     floor: {fileID: 21300000, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
@@ -502,6 +502,18 @@ Prefab:
     - target: {fileID: 400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: maxRooms
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: minRoomSize.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: minRoomSize.y
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}

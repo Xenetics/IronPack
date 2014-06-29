@@ -1,4 +1,14 @@
-﻿using UnityEngine;
+﻿/* rooms do not spawn in the correct spots other then seemingly Right build rooms
+ * maybe start from scratch on the positioning of the rooms becuase its all fucked up right now
+ * 
+ * needs doors 
+ * needs auto enemy spawning
+ * and other item spawning
+ * Floor colliders in the wrong spot 
+ */
+
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,6 +45,8 @@ public class LevelGenerator : MonoBehaviour {
 
 	//private vars
 	private List<Room> rooms = new List<Room>(); 
+
+	private List<Vector3[]> debugRays = new List<Vector3[]>();
 
 	void Awake()
 	{
@@ -315,6 +327,8 @@ public class LevelGenerator : MonoBehaviour {
 
 		//build room
 		room.size = size;
+		room.pos = new Vector3(xPos, yPos, -1f);
+		roomContainer.transform.position = room.pos;
 		room.tiles = new GameObject[Mathf.RoundToInt(room.size.x * room.size.y)];
 		room.tileRenders = new SpriteRenderer[Mathf.RoundToInt(room.size.x * room.size.y)];
 		for(int i = 0; i < room.size.x; i++)
@@ -323,7 +337,8 @@ public class LevelGenerator : MonoBehaviour {
 			{
 				//make tile and move it in to place
 				GameObject tile = new GameObject();
-				tile.transform.position = new Vector3(xPos + i, yPos + j, -1);
+				tile.transform.parent = room.container.transform;
+				tile.transform.position = new Vector3( xPos + i, yPos + j, -1);
 
 				//make the sprite for the tile
 				SpriteRenderer tileRend;
@@ -341,18 +356,28 @@ public class LevelGenerator : MonoBehaviour {
 				{
 					tileRend.sprite = tiles.floor;
 				}
-				tile.transform.parent = room.container.transform;
+
 				room.tiles[ Mathf.RoundToInt( (i*room.size.y) + j) ] = tile;  
 				room.tileRenders[ Mathf.RoundToInt( (i*room.size.y) + j) ] = tileRend;  
 			}
 		}
-		rooms.Add(room);
 
-		room.container.transform.position = room.pos;
+
+
+		rooms.Add(room);
+		//room.container.transform.position = room.pos;
+
+		//update the position of the rooms
+		//updateRoomPos();
+
+		//place collider for room gen checks, this collider can be disabled after room gen?
+		BoxCollider2D floorCollider = roomContainer.AddComponent("BoxCollider2D") as BoxCollider2D;
+		floorCollider.size = new Vector2(room.size.x - 2, room.size.y - 2);
+		floorCollider.center = (new Vector2(room.size.x - 1, room.size.y - 1)) * 0.5f;
+		roomContainer.layer = 12;//floor layer
 
 		//make more rooms
-		updateRoomPos();
-
+		//needs elegance
 		int tries = 0;
 		for( int i = 0; i < 2; i++)
 		{
@@ -364,11 +389,6 @@ public class LevelGenerator : MonoBehaviour {
 			Vector3 tile2Pos;
 			Vector3 tile3Pos;
 			Vector3 tile4Pos;
-			
-			SpriteRenderer text1;
-			SpriteRenderer text2;
-			SpriteRenderer text3;
-			SpriteRenderer text4;
 
 			if(rooms.Count < maxRooms)
 			{
@@ -379,24 +399,31 @@ public class LevelGenerator : MonoBehaviour {
 				case 1:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
 					buildPosX = xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3);
-					buildPosY = room.pos.y + room.size.y + yPos - 1;
+					buildPosY = room.pos.y + room.size.y - 1;
 
-					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
-					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
-					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
-					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
+					//raycast setup vectors
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -2.5f);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -2.5f);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -2.5f);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -2.5f);
+					
+					debugRays.Add(new Vector3[]{tile1Pos, tile2Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile3Pos, tile4Pos} );
+					debugRays.Add(new Vector3[]{tile4Pos, tile1Pos} );
+					debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile4Pos} );
 
-					text1 = findTileRender(tile1Pos);
-					text2 = findTileRender(tile2Pos);
-					text3 = findTileRender(tile3Pos);
-					text4 = findTileRender(tile4Pos);
-					if( text1 == null &&
-					    text2 == null &&
-					    text3 == null && 
-					    text4 == null)
-
+					//raycasts a box with an x throught it to try and see if it can place the room there
+					if(!Physics2D.Raycast(tile1Pos, tile2Pos, ( tile1Pos - tile2Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile3Pos, ( tile2Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile3Pos, tile4Pos, ( tile3Pos - tile4Pos).magnitude )&&
+					   !Physics2D.Raycast(tile4Pos, tile1Pos, ( tile4Pos - tile1Pos).magnitude )&&
+					   !Physics2D.Raycast(tile1Pos, tile3Pos, ( tile1Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
+						Debug.Log("top side build");
 					}
 					else if(tries < 5)
 					{
@@ -408,25 +435,32 @@ public class LevelGenerator : MonoBehaviour {
 					//building a right side room
 				case 2:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-					buildPosX = room.pos.x + room.size.x + xPos - 1;
+					buildPosX = room.pos.x + room.size.x - 1;
 					buildPosY = yPos + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3);
 					
-					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
-					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
-					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
-					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
-					
-					text1 = findTileRender(tile1Pos);
-					text2 = findTileRender(tile2Pos);
-					text3 = findTileRender(tile3Pos);
-					text4 = findTileRender(tile4Pos);
-					if( text1 == null &&
-					   text2 == null &&
-					   text3 == null && 
-					   text4 == null)
-						
+					//raycast setup vectors
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -2.5f);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -2.5f);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -2.5f);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -2.5f);
+
+					debugRays.Add(new Vector3[]{tile1Pos, tile2Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile3Pos, tile4Pos} );
+					debugRays.Add(new Vector3[]{tile4Pos, tile1Pos} );
+					debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile4Pos} );
+
+					//raycasts a box with an x throught it to try and see if it can place the room there
+					if(!Physics2D.Raycast(tile1Pos, tile2Pos, ( tile1Pos - tile2Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile3Pos, ( tile2Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile3Pos, tile4Pos, ( tile3Pos - tile4Pos).magnitude )&&
+					   !Physics2D.Raycast(tile4Pos, tile1Pos, ( tile4Pos - tile1Pos).magnitude )&&
+					   !Physics2D.Raycast(tile1Pos, tile3Pos, ( tile1Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
+						Debug.Log("right side build");
 					}
 					else if (tries < 5)
 					{
@@ -438,53 +472,69 @@ public class LevelGenerator : MonoBehaviour {
 					//building a bottom room
 				case 3:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-					buildPosX = xPos + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3);
-					buildPosY = room.pos.y + buildSize.y - yPos - 1;
+					buildPosX = room.pos.x + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3);
+					buildPosY = room.pos.y - buildSize.y + 1;
 					
-					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
-					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
-					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
-					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
+					//raycast setup vectors
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -2.5f);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -2.5f);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -2.5f);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -2.5f);
 					
-					text1 = findTileRender(tile1Pos);
-					text2 = findTileRender(tile2Pos);
-					text3 = findTileRender(tile3Pos);
-					text4 = findTileRender(tile4Pos);
-					if( text1 == null &&
-					   text2 == null &&
-					   text3 == null && 
-					   text4 == null)
-						
+					debugRays.Add(new Vector3[]{tile1Pos, tile2Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile3Pos, tile4Pos} );
+					debugRays.Add(new Vector3[]{tile4Pos, tile1Pos} );
+					debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile4Pos} );
+
+					//raycasts a box with an x throught it to try and see if it can place the room there
+					if(!Physics2D.Raycast(tile1Pos, tile2Pos, ( tile1Pos - tile2Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile3Pos, ( tile2Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile3Pos, tile4Pos, ( tile3Pos - tile4Pos).magnitude )&&
+					   !Physics2D.Raycast(tile4Pos, tile1Pos, ( tile4Pos - tile1Pos).magnitude )&&
+					   !Physics2D.Raycast(tile1Pos, tile3Pos, ( tile1Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), -Mathf.RoundToInt(buildPosY), buildSize);
+						Debug.Log("bottom side build");
 					}
 					else if(tries < 5)
 					{
 						i--;
 						tries++;
 					}
-						break;
+					break;
+
+					//left side room
 				case 4:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-					buildPosX = room.pos.x + buildSize.x - xPos - 1;
-					buildPosY = yPos + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3);
+					buildPosX = room.pos.x - buildSize.x  + 1;
+					buildPosY = room.pos.y + Random.Range(Mathf.RoundToInt(-buildSize.y + 3), Mathf.RoundToInt(room.size.y) - 3);
 					
-					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -1);
-					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -1);
-					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -1);
-					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -1);
+					//raycast setup vectors
+					tile1Pos = new Vector3(buildPosX +1, buildPosY + 1, -2.5f);
+					tile2Pos = new Vector3(buildPosX +1, buildPosY + buildSize.y - 1, -2.5f);
+					tile3Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + 1, -2.5f);
+					tile4Pos = new Vector3(buildPosX + buildSize.x -1, buildPosY + buildSize.y - 1, -2.5f);
 					
-					text1 = findTileRender(tile1Pos);
-					text2 = findTileRender(tile2Pos);
-					text3 = findTileRender(tile3Pos);
-					text4 = findTileRender(tile4Pos);
-					if( text1 == null &&
-					   text2 == null &&
-					   text3 == null && 
-					   text4 == null)
-						
+					debugRays.Add(new Vector3[]{tile1Pos, tile2Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile3Pos, tile4Pos} );
+					debugRays.Add(new Vector3[]{tile4Pos, tile1Pos} );
+					debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
+					debugRays.Add(new Vector3[]{tile2Pos, tile4Pos} );
+
+					//raycasts a box with an x throught it to try and see if it can place the room there
+					if(!Physics2D.Raycast(tile1Pos, tile2Pos, ( tile1Pos - tile2Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile3Pos, ( tile2Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile3Pos, tile4Pos, ( tile3Pos - tile4Pos).magnitude )&&
+					   !Physics2D.Raycast(tile4Pos, tile1Pos, ( tile4Pos - tile1Pos).magnitude )&&
+					   !Physics2D.Raycast(tile1Pos, tile3Pos, ( tile1Pos - tile3Pos).magnitude )&&
+					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(-Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
+						Debug.Log("left side build");
 					}
 					else if(tries < 5)
 					{
@@ -497,6 +547,21 @@ public class LevelGenerator : MonoBehaviour {
 		}
 
 		return room;
+	}
+
+	private void DrawDebugRays()
+	{
+		for( int i = 0; i < debugRays.Count; i++)
+		{
+			Vector3 rayStart= (Vector3)(debugRays[i].GetValue(0));
+			Vector3 rayEnd = (Vector3) (debugRays[i].GetValue(1));
+			Debug.DrawLine(rayStart, rayEnd , Color.red) ;
+		}
+	}
+
+	void Update()
+	{
+		DrawDebugRays();
 	}
 	
 	public Vector3 getRandomPosition()
