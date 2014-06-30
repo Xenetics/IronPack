@@ -120,21 +120,33 @@ public class Radial : MonoBehaviour
 	private float GetVectorDirection(Vector2 v)
 	{
 		float ret = 0;
-		if(v.x > 0 && v.y > 0) //Q1
+		if(v.x >= 0 && v.y > 0) //Q1
 		{
 			ret =  Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
 		}
-		else if(v.x > 0 &&  v.y < 0) //Q2
+		else if(v.x >= 0 &&  v.y < 0) //Q2
 		{
 			ret = 360 + Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
 		}
-		else if(v.x < 0 &&  v.y < 0) //Q3
+		else if(v.x <= 0 &&  v.y < 0) //Q3
 		{
 			ret = 180 + Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
 		}
-		else if(v.x < 0 &&  v.y > 0)//Q4
+		else if(v.x <= 0 &&  v.y > 0)//Q4
 		{
 			ret = 90 - (-Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x)) - 90);
+		}
+		else if ( v.y == 0 && v.x < 0)
+		{
+			ret = 180;
+		}
+		else if ( v.y == 0 && v.x > 0)
+		{
+			ret = 0;
+		}
+		else
+		{
+			//the vector is 0,0
 		}
 		return ret;
 	}

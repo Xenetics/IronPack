@@ -164,22 +164,22 @@ public class Unit : MonoBehaviour
 		//this is stil bugged. needs cases for directly north south east west.
 		float deg = GetVectorDirection(face - transform.position);
 		Debug.Log(deg);
-		if(deg > 315 && deg < 45)
+		if((deg > 315 && deg <= 360) || (deg <= 0 && deg >= 45) )
 		{
 			facing = 1;
 			//Debug.Log ("Right");
 		}
-		else if(deg > 45 && deg < 135)
+		else if(deg > 45 && deg <= 135)
 		{
 			facing = 0;
 			//Debug.Log ("Up");
 		}
-		else if(deg > 135 && deg < 225)
+		else if(deg > 135 && deg <= 225)
 		{
 			facing = 3;
 			//Debug.Log ("Left");
 		}
-		else if(deg > 225 && deg < 315)
+		else if(deg > 225 && deg <= 315)
 		{
 			facing = 2;
 			//Debug.Log ("Down");
@@ -190,21 +190,33 @@ public class Unit : MonoBehaviour
 	private float GetVectorDirection(Vector2 v)
 	{
 		float ret = 0;
-		if(v.x > 0 && v.y > 0) //Q1
+		if(v.x >= 0 && v.y > 0) //Q1
 		{
 			ret =  Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
 		}
-		else if(v.x > 0 &&  v.y < 0) //Q2
+		else if(v.x >= 0 &&  v.y < 0) //Q2
 		{
 			ret = 360 + Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
 		}
-		else if(v.x < 0 &&  v.y < 0) //Q3
+		else if(v.x <= 0 &&  v.y < 0) //Q3
 		{
 			ret = 180 + Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x));
 		}
-		else if(v.x < 0 &&  v.y > 0)//Q4
+		else if(v.x <= 0 &&  v.y > 0)//Q4
 		{
 			ret = 90 - (-Mathf.Rad2Deg * (Mathf.Atan(v.y/v.x)) - 90);
+		}
+		else if ( v.y == 0 && v.x < 0)
+		{
+			ret = 180;
+		}
+		else if ( v.y == 0 && v.x > 0)
+		{
+			ret = 0;
+		}
+		else
+		{
+			//the vector is 0,0
 		}
 		return ret;
 	}

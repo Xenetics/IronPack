@@ -140,7 +140,6 @@ public class LevelGenerator : MonoBehaviour {
 			doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.x - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
 			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
-
 				counter = 0;
 				if( i == doorPlace)
 				{
@@ -192,7 +191,7 @@ public class LevelGenerator : MonoBehaviour {
 						RaycastHit2D[] result = Physics2D.RaycastAll(tile1Pos, tile3Pos, (tile1Pos - tile3Pos).magnitude ); 
 						if(result.Length >= 6)
 						{
-								rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
+							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
 							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
 							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
 							Debug.Log ("door made right");
