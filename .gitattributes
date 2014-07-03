@@ -8,7 +8,6 @@
 *.vbproj merge=union
 *.fsproj merge=union
 *.dbproj merge=union
-*.asset merge=union
 
 # Standard to msysgit
 *.doc	 diff=astextplain
@@ -22,3 +21,6 @@
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
 *.meta diff=astextplain
+
+#unity specifc 
+*.asset  diff=astextplain
