@@ -14,6 +14,8 @@
  * 		maybe for this remove all of the tiles the ray hits (if its a valid door placment to check for this as long as the ray hits 6 walls then your good to place a door)
  * 		then place new tiles in the same places(could maybe just place 6? or even not remove the other tiles and replace them all to doors) 
  * 		then i need to write some sort of door script that opens and closes
+ * 
+ * sometimes top/bottom rooms will generate in the wrong place in the horizontal direction
  */
 
 
@@ -97,13 +99,14 @@ public class LevelGenerator : MonoBehaviour {
 
 
 			//left wall
-			int doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.y - 3)) );
+			int intDoorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.y - 3)) );
+			int doorPlace = intDoorPlace;
 			int counter;
 			for( int i = 0; i < rooms[k].size.y; i++)//can maybe get rid of this loop? or something
 			{
 
 				counter = 0;
-				if( i == doorPlace)
+				if( i == intDoorPlace)
 				{
 					do//only takes a bit too dam long now
 					{
@@ -112,7 +115,7 @@ public class LevelGenerator : MonoBehaviour {
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
-						RaycastHit2D[] result = Physics2D.RaycastAll(tile1Pos, tile3Pos, (tile1Pos - tile3Pos).magnitude ); 
+						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
 							//change up this inside part to make all 6 (or more) that it hits in to doors.
@@ -125,23 +128,24 @@ public class LevelGenerator : MonoBehaviour {
 						}						
 						else
 						{
-							if(doorPlace > rooms[k].size.y-4)
+							if(doorPlace > rooms[k].size.y-3)
 							{
 								doorPlace = 2;
 							}
 							doorPlace++;
 						}
 						counter++;
-					}while(counter < rooms[k].size.y - 5);
+					}while(counter < rooms[k].size.y - 4);
 				}
 
 			}
 			//bottom wall DOES NOTHING ?
-			doorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.x - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
+			intDoorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.x - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
+			doorPlace = intDoorPlace;
 			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
 				counter = 0;
-				if( i == doorPlace)
+				if( i == intDoorPlace)
 				{
 					do
 					{
@@ -150,7 +154,7 @@ public class LevelGenerator : MonoBehaviour {
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
-						RaycastHit2D[] result = Physics2D.RaycastAll(tile1Pos, tile3Pos, (tile1Pos - tile3Pos).magnitude ); 
+						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
 							rooms[k].tileRenders[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
@@ -168,18 +172,19 @@ public class LevelGenerator : MonoBehaviour {
 							doorPlace += Mathf.RoundToInt(rooms[k].size.y);
 						}
 						counter++;
-					}while(counter < rooms[k].size.y - 5);
+					}while(counter < rooms[k].size.x - 4);
 				}
 			}
 
 			//right
 			int tempStart = Mathf.RoundToInt((rooms[k].size.y * rooms[k].size.x) - rooms[k].size.y);
-			doorPlace  = Random.Range(tempStart + 2, Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x)-3 );
-			for(int i = tempStart; i < rooms[k].tiles.Length; i++)
+			intDoorPlace  = Random.Range(tempStart + 2, Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x)-3 );
+			doorPlace = intDoorPlace;
+			for(int i = tempStart; i < rooms[k].tiles.Length; i++)//make these do whiles?
 			{
 
 				counter = Mathf.RoundToInt(rooms[k].tiles.Length - rooms[k].size.y);
-				if( i == doorPlace)
+				if( i == intDoorPlace)
 				{
 					do
 					{
@@ -188,7 +193,7 @@ public class LevelGenerator : MonoBehaviour {
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
-						RaycastHit2D[] result = Physics2D.RaycastAll(tile1Pos, tile3Pos, (tile1Pos - tile3Pos).magnitude ); 
+						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
 							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
@@ -206,12 +211,13 @@ public class LevelGenerator : MonoBehaviour {
 							doorPlace++;
 						}
 						counter++;
-							}while(counter < Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x) - 5);
+					}while(counter <rooms[k].size.y - 4);
 				}
 			}
 
 			//top wall
-			doorPlace = Mathf.RoundToInt(rooms[k].size.y - 1)  +  ( Random.Range(2, Mathf.RoundToInt(rooms[k].size.x - 3) ) * (Mathf.RoundToInt(rooms[k].size.y)) );
+			intDoorPlace = Mathf.RoundToInt(rooms[k].size.y - 1)  +  ( Random.Range(2, Mathf.RoundToInt(rooms[k].size.x - 3) ) * (Mathf.RoundToInt(rooms[k].size.y)) );
+			doorPlace = intDoorPlace;
 			for( int i = Mathf.RoundToInt(rooms[k].size.y - 1); i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
 			{
 				counter = 0;
@@ -224,7 +230,7 @@ public class LevelGenerator : MonoBehaviour {
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
-						RaycastHit2D[] result = Physics2D.RaycastAll(tile1Pos, tile3Pos, (tile1Pos - tile3Pos).magnitude ); 
+						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
 							rooms[k].tileRenders[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
@@ -243,10 +249,13 @@ public class LevelGenerator : MonoBehaviour {
 							doorPlace += Mathf.RoundToInt(rooms[k].size.y);
 						}
 						counter++;
-					}while(counter < rooms[k].size.y - 5);
+					}while(counter < rooms[k].size.x - 4);
 				}
 			}
 		}
+
+		//all doors will be open by default so that they dont get triggered by raycasts and then call a function here to close all doors
+		//close them doors BB
 	}
 
 	private void updateRoomPos()
@@ -448,7 +457,7 @@ public class LevelGenerator : MonoBehaviour {
 					//building a bottom room
 				case 3:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-					buildPosX = room.pos.x + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3);
+					buildPosX = room.pos.x + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 4);
 					buildPosY = room.pos.y - buildSize.y + 1;
 					
 					//raycast setup vectors
