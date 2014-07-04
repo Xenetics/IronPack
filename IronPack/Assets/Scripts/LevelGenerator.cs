@@ -1,21 +1,24 @@
 ﻿/* remove Debug stuff(when done)
  * 
- * room gen needs to be less liner
+ * room gen needs to be less liner(no clue)
  * needs doors 
  * needs auto enemy spawning
  * and other item spawning
- * Floor colliders in the wrong spot 
  * 
- * BOTTOM DOOR BUILD IS BROKEN AND TOP IS NOT QUITE RIGHT 
+ * make the floor collider box 1 larger in all directions(right now there is the possiblity of a one block overlap)
  * 
- * maybe just start over on the doors
+ * name all the game opjects made through script
+ * 
+ * right side door does not do the right number of checks
+ * 
+ * left side door starts 1 too high from the bottom after the wrap around from the top
  * 
  * change door placemnts to use raycasts if possible(remeber you can get all the things the ray hit)
  * 		maybe for this remove all of the tiles the ray hits (if its a valid door placment to check for this as long as the ray hits 6 walls then your good to place a door)
  * 		then place new tiles in the same places(could maybe just place 6? or even not remove the other tiles and replace them all to doors) 
  * 		then i need to write some sort of door script that opens and closes
  * 
- * sometimes top/bottom rooms will generate in the wrong place in the horizontal direction
+ * sometimes top/bottom rooms will generate in the wrong place in the horizontal direction(maybe I fixed this?)
  */
 
 
@@ -32,8 +35,8 @@ public class LevelGenerator : MonoBehaviour {
 	{
 		public Sprite wall;
 		public Sprite floor;
-		public Sprite door;
-		public Sprite blank;
+		public Sprite doorOpen;
+		public Sprite doorClose;
 	}
 
 	[System.Serializable]
@@ -53,6 +56,7 @@ public class LevelGenerator : MonoBehaviour {
 	public Vector2 maxRoomSize = new Vector2(20 , 20); 
 	public int maxRooms = 20;
 	public Tiles tiles;
+	public GameObject world;
 
 	//private vars
 	private List<Room> rooms = new List<Room>(); 
@@ -79,7 +83,7 @@ public class LevelGenerator : MonoBehaviour {
 	{
 		//size of room can be decided before room is made 
 		//this will allow rooms to be made in all directions
-
+		world = new GameObject ("World");
 		buildRoom(0, 0, new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2))));
 		updateRoomPos();
 
@@ -108,27 +112,21 @@ public class LevelGenerator : MonoBehaviour {
 				counter = 0;
 				if( i == intDoorPlace)
 				{
-					do//only takes a bit too dam long now
+					do
 					{
 						Vector3 tile1Pos = rooms[k].tiles[doorPlace-1].transform.position;
-						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							//change up this inside part to make all 6 (or more) that it hits in to doors.
-							//add these doors to a contanir and put a script on it that disables when the player walks in front of the door.
-							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
-							Debug.Log ("door made left");
+							BuildDoor(result);
 							break;
 						}						
 						else
 						{
-							if(doorPlace > rooms[k].size.y-3)
+							if(doorPlace > rooms[k].size.y-4)
 							{
 								doorPlace = 2;
 							}
@@ -139,7 +137,7 @@ public class LevelGenerator : MonoBehaviour {
 				}
 
 			}
-			//bottom wall DOES NOTHING ?
+			//bottom wall
 			intDoorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.x - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
 			doorPlace = intDoorPlace;
 			for( int i = 0; i < rooms[k].tiles.Length; i += Mathf.RoundToInt(rooms[k].size.y))
@@ -150,17 +148,13 @@ public class LevelGenerator : MonoBehaviour {
 					do
 					{
 						Vector3 tile1Pos = rooms[k].tiles[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].transform.position;
-						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							rooms[k].tileRenders[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
-							Debug.Log ("door made bottom");
+							BuildDoor(result);
 							break;
 						}
 						else
@@ -176,7 +170,7 @@ public class LevelGenerator : MonoBehaviour {
 				}
 			}
 
-			//right
+			//right not right at all <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 			int tempStart = Mathf.RoundToInt((rooms[k].size.y * rooms[k].size.x) - rooms[k].size.y);
 			intDoorPlace  = Random.Range(tempStart + 2, Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x)-3 );
 			doorPlace = intDoorPlace;
@@ -189,24 +183,20 @@ public class LevelGenerator : MonoBehaviour {
 					do
 					{
 						Vector3 tile1Pos = rooms[k].tiles[doorPlace-1].transform.position;
-						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+1].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							rooms[k].tileRenders[doorPlace-1].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace+1].sprite = tiles.door;
-							Debug.Log ("door made right");
+							BuildDoor(result);
 							break;
 						}
 						else
 						{
 							if(doorPlace > Mathf.RoundToInt(rooms[k].size.y * rooms[k].size.x)-4)
 							{
-								doorPlace = tempStart + 2;
+								doorPlace = tempStart + 3;
 							}
 							doorPlace++;
 						}
@@ -226,17 +216,13 @@ public class LevelGenerator : MonoBehaviour {
 					do
 					{
 						Vector3 tile1Pos = rooms[k].tiles[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].transform.position;
-						Vector3 tile2Pos = rooms[k].tiles[doorPlace].transform.position;
 						Vector3 tile3Pos = rooms[k].tiles[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].transform.position;
 
 						debugRays.Add(new Vector3[]{tile1Pos, tile3Pos} );
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							rooms[k].tileRenders[doorPlace-Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace].sprite = tiles.door;
-							rooms[k].tileRenders[doorPlace+Mathf.RoundToInt(rooms[k].size.y)].sprite = tiles.door;
-							Debug.Log ("door made top");
+							BuildDoor(result);
 							break;
 						}
 						else
@@ -258,6 +244,24 @@ public class LevelGenerator : MonoBehaviour {
 		//close them doors BB
 	}
 
+	private void BuildDoor(RaycastHit2D[] result)
+	{
+		GameObject door = new GameObject();
+		door.name = "Door";
+		Door doorScript = door.AddComponent("Door") as Door;
+		doorScript.doorClosed = tiles.doorClose;
+		doorScript.doorOpen = tiles.doorOpen;
+		doorScript.takeRaycastHit2D(result);
+		for( int l = 0; l < result.Length; l++)
+		{
+			//result[l].collider.gameObject.GetComponent<SpriteRenderer>().sprite = tiles.door;
+			result[l].collider.gameObject.transform.parent = door.transform;
+		}
+		door.transform.parent = world.transform;
+		doorScript.Close();
+		Debug.Log ("door made left");
+	}
+	
 	private void updateRoomPos()
 	{
 		for( int i = 0; i < rooms.Count; i++)
@@ -301,7 +305,7 @@ public class LevelGenerator : MonoBehaviour {
 	{
 		//set up
 		Room room = new Room();
-		GameObject roomContainer = new GameObject();
+		GameObject roomContainer = new GameObject("Room");
 		room.container = roomContainer;
 
 		//build room
@@ -315,7 +319,7 @@ public class LevelGenerator : MonoBehaviour {
 			for(int j = 0; j < room.size.y; j++)
 			{
 				//make tile and move it in to place
-				GameObject tile = new GameObject();
+				GameObject tile = new GameObject("Tile " + i + " " + j );
 				tile.transform.parent = room.container.transform;
 				tile.transform.position = new Vector3( xPos + i, yPos + j, -1);
 
@@ -357,6 +361,8 @@ public class LevelGenerator : MonoBehaviour {
 		floorCollider.size = new Vector2(room.size.x - 2, room.size.y - 2);
 		floorCollider.center = (new Vector2(room.size.x - 1, room.size.y - 1)) * 0.5f;
 		roomContainer.layer = 12;//floor layer
+
+		roomContainer.transform.parent = world.transform;
 
 		//make more rooms
 		//needs elegance
@@ -457,7 +463,7 @@ public class LevelGenerator : MonoBehaviour {
 					//building a bottom room
 				case 3:
 					buildSize = new Vector2(Random.Range(Mathf.CeilToInt(minRoomSize.x + 2), Mathf.CeilToInt(maxRoomSize.x + 2)), Random.Range(Mathf.CeilToInt(minRoomSize.y + 2), Mathf.CeilToInt(maxRoomSize.y + 2)));
-					buildPosX = room.pos.x + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 4);
+					buildPosX = room.pos.x + Random.Range(Mathf.RoundToInt(-buildSize.x + 3), Mathf.RoundToInt(room.size.x) - 3);
 					buildPosY = room.pos.y - buildSize.y + 1;
 					
 					//raycast setup vectors
@@ -548,7 +554,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	void Update()
 	{
-		DrawDebugRays();
+		//DrawDebugRays();
 	}
 	
 	public Vector3 getRandomPosition()

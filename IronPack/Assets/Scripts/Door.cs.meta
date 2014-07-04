@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: e6d7104f9f737ec468c3f068e47c751f
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - doorOpen: {instanceID: 0}
+  - doorClosed: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

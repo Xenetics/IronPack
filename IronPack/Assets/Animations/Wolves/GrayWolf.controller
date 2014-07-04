@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Wolf
+  m_Name: GrayWolf
   serializedVersion: 2
   m_AnimatorParameters:
   - m_Name: Direction
@@ -583,7 +583,7 @@ State:
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 0}
+  - {fileID: 7400000, guid: 5975de1b4900c9f43bb4eec550d10cbd, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: 108, y: 192, z: 0}
   m_IKOnFeet: 0
@@ -598,7 +598,7 @@ State:
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: ad2a5dfe85c420c46a2cfbf9c648432b, type: 2}
+  - {fileID: 7400000, guid: 25e0a2c7306c0ae469dc59289c7f7d53, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: 900, y: 264, z: 0}
   m_IKOnFeet: 0
@@ -613,7 +613,7 @@ State:
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: febaabfd826379f4c9d87aea8f6e3306, type: 2}
+  - {fileID: 7400000, guid: 99e2bdf294e9d204e91eeb7758cd42da, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: -288, y: 264, z: 0}
   m_IKOnFeet: 0
@@ -643,7 +643,7 @@ State:
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: 0d8de4f4b3c3f90469e4dda6ab6f7187, type: 2}
+  - {fileID: 7400000, guid: 75c04d185dac13942bf932d4b1e089df, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: 264, y: 648, z: 0}
   m_IKOnFeet: 0
@@ -658,7 +658,7 @@ State:
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: c986454a2877bc9408310837da138666, type: 2}
+  - {fileID: 7400000, guid: 293404664bcb38d4f98d2d5417253fd2, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: 264, y: -12, z: 0}
   m_IKOnFeet: 0
@@ -701,15 +701,19 @@ StateMachine:
       - {fileID: 110170864}
       - {fileID: 110123297}
     data:
+      first: {fileID: 110284403}
+      second:
+      - {fileID: 110112001}
+      - {fileID: 110167333}
+      - {fileID: 110124319}
+      - {fileID: 110173206}
+    data:
       first: {fileID: 110217486}
       second:
       - {fileID: 110122815}
       - {fileID: 110188192}
       - {fileID: 110166178}
       - {fileID: 110112987}
-    data:
-      first: {fileID: 110224288}
-      second: []
     data:
       first: {fileID: 110256115}
       second:
@@ -718,12 +722,8 @@ StateMachine:
       - {fileID: 110119957}
       - {fileID: 110137552}
     data:
-      first: {fileID: 110284403}
-      second:
-      - {fileID: 110112001}
-      - {fileID: 110167333}
-      - {fileID: 110124319}
-      - {fileID: 110173206}
+      first: {fileID: 110224288}
+      second: []
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 540, y: -108, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

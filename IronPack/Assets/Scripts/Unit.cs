@@ -163,7 +163,7 @@ public class Unit : MonoBehaviour
 	{
 		//this is stil bugged. needs cases for directly north south east west.
 		float deg = GetVectorDirection(face - transform.position);
-		Debug.Log(deg);
+		//Debug.Log(deg);
 		if((deg > 315 && deg <= 360) || (deg <= 0 && deg >= 45) )
 		{
 			facing = 1;

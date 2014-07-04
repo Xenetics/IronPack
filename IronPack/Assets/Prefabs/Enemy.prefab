@@ -252,10 +252,10 @@ MonoBehaviour:
   speed: 3
   defence: 1
   visionDistance: 5
-  faceUp: {fileID: 21300000, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  faceRight: {fileID: 21300002, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  faceDown: {fileID: 21300004, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  faceLeft: {fileID: 21300006, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
+  faceUp: {fileID: 21300028, guid: 5f3b6cbb923bf1445a4c7c5ecbb89e5a, type: 3}
+  faceRight: {fileID: 21300014, guid: 5f3b6cbb923bf1445a4c7c5ecbb89e5a, type: 3}
+  faceDown: {fileID: 21300042, guid: 5f3b6cbb923bf1445a4c7c5ecbb89e5a, type: 3}
+  faceLeft: {fileID: 21300006, guid: 5f3b6cbb923bf1445a4c7c5ecbb89e5a, type: 3}
   walkUp:
   - {fileID: 21300000, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
   walkRight:
@@ -344,8 +344,8 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300006, guid: 5f3b6cbb923bf1445a4c7c5ecbb89e5a, type: 3}
+  m_Color: {r: .992156863, g: .992156863, b: .992156863, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
