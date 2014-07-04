@@ -41,6 +41,21 @@ public class UnitManager : MonoBehaviour
 		return null;
 	}
 
+	public void ClearAllSensors()
+	{
+		player.GetComponent<Unit> ().ClearSensors ();
+		for (int i = 0; i < enemies.Count; i ++)
+		{
+			enemies[i].GetComponent<Unit> ().ClearSensors ();
+		}
+
+		for (int i = 0; i < wolves.Count; i ++)
+		{
+			wolves[i].GetComponent<Unit> ().ClearSensors ();
+		}
+
+	}
+
 	public GameObject getPlayer()
 	{
 		return player;

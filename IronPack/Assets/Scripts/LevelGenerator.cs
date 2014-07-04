@@ -121,7 +121,7 @@ public class LevelGenerator : MonoBehaviour {
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							BuildDoor(result);
+							BuildDoor(result, rooms[k].tiles[doorPlace].transform.position, false);
 							break;
 						}						
 						else
@@ -135,8 +135,8 @@ public class LevelGenerator : MonoBehaviour {
 						counter++;
 					}while(counter < rooms[k].size.y - 4);
 				}
-
 			}
+
 			//bottom wall
 			intDoorPlace  = Random.Range(2, (Mathf.RoundToInt(rooms[k].size.x - 3)) )* (Mathf.RoundToInt(rooms[k].size.y - 3));
 			doorPlace = intDoorPlace;
@@ -154,7 +154,7 @@ public class LevelGenerator : MonoBehaviour {
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							BuildDoor(result);
+							BuildDoor(result, rooms[k].tiles[doorPlace].transform.position, true);
 							break;
 						}
 						else
@@ -189,7 +189,7 @@ public class LevelGenerator : MonoBehaviour {
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							BuildDoor(result);
+							BuildDoor(result, rooms[k].tiles[doorPlace].transform.position, false);
 							break;
 						}
 						else
@@ -222,7 +222,7 @@ public class LevelGenerator : MonoBehaviour {
 						RaycastHit2D[] result = Physics2D.LinecastAll(tile1Pos, tile3Pos); 
 						if(result.Length >= 6)
 						{
-							BuildDoor(result);
+							BuildDoor(result, rooms[k].tiles[doorPlace].transform.position, true);
 							break;
 						}
 						else
@@ -244,7 +244,7 @@ public class LevelGenerator : MonoBehaviour {
 		//close them doors BB
 	}
 
-	private void BuildDoor(RaycastHit2D[] result)
+	private void BuildDoor(RaycastHit2D[] result, Vector2 pos, bool horizontal)
 	{
 		GameObject door = new GameObject();
 		door.name = "Door";
@@ -257,9 +257,19 @@ public class LevelGenerator : MonoBehaviour {
 			//result[l].collider.gameObject.GetComponent<SpriteRenderer>().sprite = tiles.door;
 			result[l].collider.gameObject.transform.parent = door.transform;
 		}
+		/*
+		BoxCollider2D sensor = door.AddComponent ("BoxCollider2D");
+		if (horizontal)
+			sensor.size = new Vector2 (3, 1);
+		else
+			sensor.size = new Vector2 (1, 3);
+		sensor.center = pos;
+		sensor.isTrigger = true;
+		*/
+
+
 		door.transform.parent = world.transform;
-		doorScript.Close();
-		Debug.Log ("door made left");
+		//doorScript.Close();
 	}
 	
 	private void updateRoomPos()
@@ -414,7 +424,7 @@ public class LevelGenerator : MonoBehaviour {
 					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
-						Debug.Log("top side build");
+						//Debug.Log("top side build");
 					}
 					else if(tries < 5)
 					{
@@ -451,7 +461,7 @@ public class LevelGenerator : MonoBehaviour {
 					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
-						Debug.Log("right side build");
+						//Debug.Log("right side build");
 					}
 					else if (tries < 5)
 					{
@@ -488,7 +498,7 @@ public class LevelGenerator : MonoBehaviour {
 					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
-						Debug.Log("bottom side build");
+						//Debug.Log("bottom side build");
 					}
 					else if(tries < 5)
 					{
@@ -525,7 +535,7 @@ public class LevelGenerator : MonoBehaviour {
 					   !Physics2D.Raycast(tile2Pos, tile4Pos, ( tile2Pos - tile4Pos).magnitude )  )
 					{
 						builtRoom = buildRoom(Mathf.RoundToInt(buildPosX), Mathf.RoundToInt(buildPosY), buildSize);
-						Debug.Log("left side build");
+						//Debug.Log("left side build");
 					}
 					else if(tries < 5)
 					{

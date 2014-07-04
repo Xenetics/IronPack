@@ -51,6 +51,14 @@ public class Unit : MonoBehaviour
 	{
 		health += dmg - (dmg * (10/defence));
 	}
+	
+	public void ClearSensors()
+	{
+		for (int i = 0; i < sensorScripts.Length; i++) 
+		{
+			sensorScripts[i].clearTargets();
+		}
+	}
 
 	public void startFunc()
 	{
