@@ -18,7 +18,7 @@ RenderSettings:
   m_FogDensity: .00999999978
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+  m_AmbientLight: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 6894d7b7cca90904db812e0858fdbc3b, type: 2}
   m_HaloStrength: .5
   m_FlareStrength: 1
@@ -137,6 +137,14 @@ Prefab:
       propertyPath: lightingEnabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 8f2358b57bf7fcf4c8159340dbe582fe, type: 2}
+      propertyPath: ignoreLayers.m_Bits
+      value: 5376
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 8f2358b57bf7fcf4c8159340dbe582fe, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8f2358b57bf7fcf4c8159340dbe582fe, type: 2}
   m_RootGameObject: {fileID: 747027890}
@@ -214,7 +222,7 @@ MonoBehaviour:
   mask: {fileID: 21300000, guid: ab8d5905e41d45d4790425a24e22c9f4, type: 3}
   ignoreLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 5376
   facing: 0
   maskSize: {x: 23, y: 13}
 --- !u!4 &508651121
@@ -226,7 +234,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: .5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 971598371}
   m_Father: {fileID: 747027895}
   m_RootOrder: 0
 --- !u!1 &747027890
@@ -332,6 +341,69 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!1 &971598370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 971598371}
+  - 108: {fileID: 971598372}
+  m_Layer: 0
+  m_Name: Spotlight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &971598371
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 971598370}
+  m_LocalRotation: {x: .374606699, y: 0, z: 0, w: -.927183807}
+  m_LocalPosition: {x: 0, y: -1.54999995, z: -1.11000001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 508651121}
+  m_RootOrder: 0
+--- !u!108 &971598372
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 971598370}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 30
+  m_SpotAngle: 50
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1 &1008453864
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,13 +476,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4720c4c229224eb40b14e6c5782142f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMat: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
   minRoomSize: {x: 4, y: 4}
   maxRoomSize: {x: 30, y: 30}
   maxRooms: 10
   tiles:
     wall: {fileID: 21300002, guid: b37f5ac035a1ce6448723e6883e8a9d9, type: 3}
     floor: {fileID: 21300000, guid: f5bb93eec77731c4d8c524d24fc0abd6, type: 3}
-    doorOpen: {fileID: 21300000, guid: 9b9ed22f1f57ba749ad5d36d2351a0c0, type: 3}
+    doorOpen: {fileID: 21300000, guid: 1d0a5be0c94537741b91429f5c8226d3, type: 3}
     doorClose: {fileID: 21300024, guid: fb922124a6103034a82dcdaf4d23d951, type: 3}
   world: {fileID: 0}
 --- !u!4 &1137196809
@@ -527,7 +600,7 @@ Prefab:
     - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
       propertyPath: tiles.doorOpen
       value: 
-      objectReference: {fileID: 21300000, guid: 9b9ed22f1f57ba749ad5d36d2351a0c0,
+      objectReference: {fileID: 21300000, guid: 1d0a5be0c94537741b91429f5c8226d3,
         type: 3}
     - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
       propertyPath: tiles.doorClose
@@ -539,6 +612,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: f5bb93eec77731c4d8c524d24fc0abd6,
         type: 3}
+    - target: {fileID: 11400000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6818d879c246c04caa3686872df8ca2, type: 2}
   m_RootGameObject: {fileID: 1137196807}

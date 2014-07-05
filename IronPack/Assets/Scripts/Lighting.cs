@@ -1,8 +1,143 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+/*
+public class Lighting : MonoBehaviour
+{
+	//singleton class stuff
+	public static Lighting Instance { get { return instance; } }
+	private static Lighting instance = null;
+	
+	private enum dir {UP, RIGHT, DOWN, LEFT};
+	
+	public bool lightingEnabled = true;
+	public Sprite mask;
+	public LayerMask ignoreLayers;
+	
+	private GameObject target;
+	public int facing;
+	
+	public Vector2 maskSize = new Vector2(16f, 9f);
+	
+	
+	private int vision;
+	private GameObject cam;
+	private GameObject[,] maskTiles;
+	
+	public void setCameraTarget(GameObject input)
+	{
+		cam.GetComponent<CameraController>().target = input;
+	}
+	
+	public void setTarget(GameObject input)
+	{
+		target = input;
+		facing = target.GetComponent<Unit>().getFacing();
+		vision = target.GetComponent<Unit>().visionDistance;
+	}
+	
+	private void Awake () 
+	{
+		//more singleton class stuff
+		if (instance != null && instance != this)
+		{
+			Destroy(this.gameObject);
+			return;        
+		} 
+		else 
+		{
+			instance = this;
+		}
+		DontDestroyOnLoad(this.gameObject);
+	}
+	
+	// Use this for initialization
+	public void StartGame () 
+	{
+		cam = transform.parent.gameObject;
+		ignoreLayers = ~ignoreLayers;
+	}
+	
+	// Update is called once per frame
+	void LateUpdate () //THIS SHIT IS FUCKING BAD FIX THIS FAST <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!!
+	{	
+		facing = target.GetComponent<Unit>().getFacing();
+		vision = target.GetComponent<Unit>().visionDistance;
 
-public class Lighting : MonoBehaviour 
+		switch(facing)
+		{
+		case (int)dir.UP:
+			transform.rotation = Quaternion.Euler(0, 0, 0);
+			break;
+		case (int)dir.RIGHT:
+			transform.rotation = Quaternion.Euler(0,  0, -90);
+			break;
+		case (int)dir.DOWN:
+			transform.rotation = Quaternion.Euler(0, 0, 180);
+			break;
+		case (int)dir.LEFT:
+			transform.rotation = Quaternion.Euler(0, 0, 90);
+			break;
+		}
+	}
+	
+	private void ShowTile(int posX, int posY)
+	{
+		Vector2 pos = new Vector2( posX, posY);
+		for(int i = 0; i < maskSize.x; i++)
+		{
+			for(int j = 0; j < maskSize.y; j++)
+			{
+				Vector2 maskPos = maskTiles[i,j].transform.position;
+				if( pos == maskPos)
+				{
+					maskTiles[i,j].SetActive(false);
+				}
+			}
+			
+		}
+	}
+	
+	public void resetVision()
+	{
+		for(int i = 0; i < maskSize.x; i++)
+		{
+			for(int j = 0; j < maskSize.y; j++)
+			{
+				if(lightingEnabled)
+				{
+					maskTiles[i,j].SetActive(true);
+				}
+				else
+				{
+					maskTiles[i,j].SetActive(false);
+				}
+			}
+		}
+	}
+	
+	private void ShowTile(Vector2 input)
+	{
+		Vector2 pos = new Vector2(Mathf.Round(input.x), Mathf.Round(input.y));
+		for(int i = 0; i < maskSize.x; i++)
+		{
+			for(int j = 0; j < maskSize.y; j++)
+			{
+				Vector2 maskPos = maskTiles[i,j].transform.position;
+				if( pos == maskPos)
+				{
+					maskTiles[i,j].SetActive(false);
+				}
+				
+			}
+			
+		}
+	}
+	
+}
+*/
+
+public class Lighting : MonoBehaviour
 {
 	//singleton class stuff
 	public static Lighting Instance { get { return instance; } }
@@ -82,7 +217,7 @@ public class Lighting : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void LateUpdate () 
+	void LateUpdate () //THIS SHIT IS FUCKING BAD FIX THIS FAST <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!!
 	{	
 		if( (target.transform.position.y == Mathf.Round(target.transform.position.y) && target.transform.position.x == Mathf.Round(target.transform.position.x))&&
 		    (cam.transform.position.y == Mathf.Round(cam.transform.position.y) && cam.transform.position.x == Mathf.Round(cam.transform.position.x)) )
@@ -131,7 +266,7 @@ public class Lighting : MonoBehaviour
 			hitList.Add(Physics2D.Raycast(rayStart, rayEnd, vision, ignoreLayers));
 			Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z), new Vector3(rayEnd.x, rayEnd.y, transform.position.z), Color.red);
 
-			//if ( hitList[i].collider == null)
+			if( hitList[i].collider == null)// if you uncomment this shit the world explodes
 			{
 				bool done = false;
 				Vector2 increment = (rayEnd - rayStart).normalized;
@@ -140,38 +275,98 @@ public class Lighting : MonoBehaviour
 				do
 				{
 					curentPos += increment;
-
-					switch(facing)
+					if(increment.magnitude > 0.5f)
 					{
-					case (int)dir.UP:
-						if (curentPos.y > rayEnd.y + 0.5f) 
+						switch(facing)
 						{
-							done =true;
+						case (int)dir.UP:
+							if (curentPos.y > rayEnd.y + 0.5f) 
+							{
+								done =true;
+							}
+							break;
+						case (int)dir.RIGHT:
+							if (curentPos.x > rayEnd.x + 0.5f)
+							{
+								done =true;
+							}
+							break;
+						case (int)dir.DOWN:
+							if (curentPos.y < rayEnd.y - 0.5f)
+							{
+								done =true;
+							}
+							break;
+						case (int)dir.LEFT:
+							if (curentPos.x < rayEnd.x - 0.5f)
+							{
+								done =true;
+							}
+							break;
 						}
-						break;
-					case (int)dir.RIGHT:
-						if (curentPos.x > rayEnd.x + 0.5f)
-						{
-							done =true;
-						}
-						break;
-					case (int)dir.DOWN:
-						if (curentPos.y < rayEnd.y - 0.5f)
-						{
-							done =true;
-						}
-						break;
-					case (int)dir.LEFT:
-						if (curentPos.x < rayEnd.x - 0.5f)
-						{
-							done =true;
-						}
-						break;
+					}
+					else
+					{
+						done = true;
 					}
 
 					if(!done){ShowTile(curentPos);}
 
 
+				}while(!done);
+			}
+			else
+			{
+				//the rays have been stoped by something, cut off vision eary
+				//this I really broken, like really really broken.
+				bool done = false;
+				Vector2 newRayEnd = hitList[i].point;
+				Vector2 increment = (newRayEnd - rayStart).normalized;
+				
+				Vector2 curentPos = rayStart;
+
+
+				do
+				{
+					curentPos += increment;
+					if(increment.magnitude > 0.5f)
+					{
+						switch(facing)
+						{
+						case (int)dir.UP:
+							if (curentPos.y > newRayEnd.y + 0.5f) 
+							{
+								done =true;
+							}
+							break;
+						case (int)dir.RIGHT:
+							if (curentPos.x > newRayEnd.x + 0.5f)
+							{
+								done =true;
+							}
+							break;
+						case (int)dir.DOWN:
+							if (curentPos.y < newRayEnd.y - 0.5f)
+							{
+								done =true;
+							}
+							break;
+						case (int)dir.LEFT:
+							if (curentPos.x < newRayEnd.x - 0.5f)
+							{
+								done =true;
+							}
+							break;
+						}
+					}
+					else 
+					{
+						done = true;
+					}
+					
+					if(!done){ShowTile(curentPos);}
+					
+					
 				}while(!done);
 			}
 			rayEnd += rayAdd;

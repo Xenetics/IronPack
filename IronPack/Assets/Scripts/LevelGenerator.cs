@@ -51,7 +51,8 @@ public class LevelGenerator : MonoBehaviour {
 
 	enum Direction{NORTH, EAST, SOUTH, WEST};
 
-	//public vars
+	//public vars\
+	public Material defaultMat;
 	public Vector2 minRoomSize = new Vector2(4 , 4);
 	public Vector2 maxRoomSize = new Vector2(20 , 20); 
 	public int maxRooms = 20;
@@ -336,6 +337,7 @@ public class LevelGenerator : MonoBehaviour {
 				//make the sprite for the tile
 				SpriteRenderer tileRend;
 				tileRend = tile.AddComponent("SpriteRenderer") as SpriteRenderer;
+				tileRend.material = defaultMat;
 
 				//picks what sprite to use for the tile
 				//this if determans if its a wall tile
