@@ -11,11 +11,17 @@ public class Radial : MonoBehaviour
 	private Vector2 wPos;
 	private Vector2 wolfPos;
 	private float mag;
+
+	private bool takeNextClick = false;//could have better name
+	private string commandName = "";
+	private GameObject target;
 	
 	public Texture backgroundTexture;
 	
 	public float menuButtonX;
 	public float menuButtonY;
+
+
 	
 	// Use this for initialization
 	void Start () 
@@ -26,7 +32,7 @@ public class Radial : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		Vector2 mPos = GetMouseInWorld(-2f);
+		Vector2 mPos = GetMouseInWorld(-2f);//this could be moved to an optimized place
 		//wolves[0].transform.position;
 
 		if(Input.GetMouseButtonDown(0))
@@ -44,39 +50,67 @@ public class Radial : MonoBehaviour
 				if( (wolfPos - mPos).magnitude < 0.8f) 
 				{
 					radialShow = true;
+					target = wolves[i].gameObject;
 					menuButtonX = Input.mousePosition.x;
 					menuButtonY = Input.mousePosition.y;
+					break;
 				}
 			}
 		}
 
 		if (Input.GetMouseButtonUp(0))
 		{
-			if (radialShow == true)
+			if(takeNextClick)
+			{
+				if(commandName == ("move"))
+				{
+					target.GetComponent<Wolf>().GiveCommand("move", mPos);
+				}
+				else if(commandName == ("special"))
+				{
+					target.GetComponent<Wolf>().GiveCommand("special", mPos);
+				}
+				else if(commandName == ("stay"))
+				{
+					target.GetComponent<Wolf>().GiveCommand("stay", mPos);
+				}
+				else if(commandName == ("attack"))
+				{
+					target.GetComponent<Wolf>().GiveCommand("attack", mPos);
+				}
+				takeNextClick = false;
+			}
+			else if (radialShow == true)
 			{
 				float dir = GetVectorDirection(mPos - wolfPos);
 				if(dir > 0 && dir < 90)
 				{
-					Debug.Log ("move");
-					//command for pointing top right (move)
+					commandName = ("move");
+					takeNextClick = true;
+						//command for pointing top right (move)
 				}
 				else if(dir > 90 && dir < 180)
 				{
-					Debug.Log ("special");
-					//command for pointing top left(special)
+					commandName = ("special");
+					takeNextClick = true;
+						//command for pointing top left(special)
 				}
 				else if(dir > 180 && dir < 270)
 				{
-					Debug.Log ("stay");
-					//command for pointing bottom left(stay)
+					commandName = ("stay");
+					takeNextClick = true;
+						//command for pointing bottom left(stay)
 				}
 				else if(dir > 270 && dir < 360)
 				{
-					Debug.Log ("attack");
-					//command for pointing bottom right(attack)           
+					commandName = ("attack");
+					takeNextClick = true;
+						//command for pointing bottom right(attack)           
 				}
 			}
+
 			radialShow = false;
+					
 		}
 	}
 

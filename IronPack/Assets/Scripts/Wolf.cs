@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿//this eniter thing is pretty messy as it was build in peices
+//can be cleaned up big time
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,7 +14,10 @@ public class Wolf : Unit
 
 	public State currentState;
 	public int followDistance = 3; //rename this varable
-
+	public bool commandPresent = false;
+	
+	private Vector2 commandLocation;
+	private string currentCommand;
 	private Transform player;
 
 	private List<Transform> enemies;
@@ -38,7 +44,14 @@ public class Wolf : Unit
 		}
 	}
 
-	private bool tryAttack() //maybe merge this in to attack too to make it more effecnient 
+	public void GiveCommand(string s, Vector2 pos)
+	{
+		currentCommand = s;
+		commandLocation = pos;
+		commandPresent = true;
+	}
+
+	private bool tryAttack()
 	{
 		//if all empty then return flase
 		if (!sensorScripts[0].isColliding && !sensorScripts[1].isColliding && !sensorScripts[2].isColliding && !sensorScripts[3].isColliding)
@@ -76,10 +89,11 @@ public class Wolf : Unit
 	void Update ()
 	{
 		updateLoop();
+
 		//move this to an optimized place
 		UpdateEnemies();
 
-		if(true/* no command present */)
+		if(!commandPresent)
 		{
 			switch((int)currentState)
 			{
@@ -129,6 +143,27 @@ public class Wolf : Unit
 				if(tryAttack())
 				{}
 				break;
+			}
+		}
+		else if(commandPresent)
+		{
+			if(currentCommand == ("move"))
+			{
+				changeDirFacing(new Vector3(commandLocation.x, commandLocation.y, transform.position.z) );
+				move();
+			}
+			else if(currentCommand == ("special"))
+			{
+				Debug.Log("do shit bb S");
+			}
+			else if(currentCommand == ("stay"))
+			{
+				//yeah does nothing I guess
+				//maybe add in to try attack here
+			}
+			else if(currentCommand == ("attack"))
+			{
+				Debug.Log("do shit bb A");
 			}
 		}
 	}

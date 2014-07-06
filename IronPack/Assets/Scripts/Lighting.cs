@@ -219,6 +219,9 @@ public class Lighting : MonoBehaviour
 	// Update is called once per frame
 	void LateUpdate () //THIS SHIT IS FUCKING BAD FIX THIS FAST <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!!
 	{	
+		//some debug lines
+		//Debug.DrawLine(Vector3.zero, target.transform.position, Color.yellow);
+
 		if( (target.transform.position.y == Mathf.Round(target.transform.position.y) && target.transform.position.x == Mathf.Round(target.transform.position.x))&&
 		    (cam.transform.position.y == Mathf.Round(cam.transform.position.y) && cam.transform.position.x == Mathf.Round(cam.transform.position.x)) )
 		{
@@ -229,6 +232,7 @@ public class Lighting : MonoBehaviour
 		vision = target.GetComponent<Unit>().visionDistance;
 
 		ShowTile(new Vector2(target.transform.position.x, target.transform.position.y));
+
 		//the vision value is the distance they can see, if 45 degree angle then the number of back tiles is ((vision * 2) + 1)
 		//raycast out from the player straight and also from the player to each block along the back of the vision distance
 
@@ -261,15 +265,21 @@ public class Lighting : MonoBehaviour
 			rayAdd.y = 1f;
 			break;
 		}
+
 		for ( int i = 0; i < numRays; i++)//first and last raycast may not be needed, Consider removing
 		{
 			hitList.Add(Physics2D.Raycast(rayStart, rayEnd, vision, ignoreLayers));
-			Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z), new Vector3(rayEnd.x, rayEnd.y, transform.position.z), Color.red);
 
-			if( hitList[i].collider == null)// if you uncomment this shit the world explodes
+
+			if ( hitList[i].collider == null)// if you uncomment this shit the world explodes
 			{
+				//is this debug ray wrong?
+				Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z), new Vector3(rayStart.x, rayStart.y, transform.position.z) + ((new Vector3(rayEnd.x, rayEnd.y, transform.position.z)).normalized * vision), Color.red);
+
 				bool done = false;
 				Vector2 increment = (rayEnd - rayStart).normalized;
+				Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z),new Vector3(rayStart.x, rayStart.y, transform.position.z) + (new Vector3(increment.x, increment.y, transform.position.z)), Color.yellow);
+
 
 				Vector2 curentPos = rayStart;
 				do
@@ -282,25 +292,25 @@ public class Lighting : MonoBehaviour
 						case (int)dir.UP:
 							if (curentPos.y > rayEnd.y + 0.5f) 
 							{
-								done =true;
+								done = true;
 							}
 							break;
 						case (int)dir.RIGHT:
 							if (curentPos.x > rayEnd.x + 0.5f)
 							{
-								done =true;
+								done = true;
 							}
 							break;
 						case (int)dir.DOWN:
 							if (curentPos.y < rayEnd.y - 0.5f)
 							{
-								done =true;
+								done = true;
 							}
 							break;
 						case (int)dir.LEFT:
 							if (curentPos.x < rayEnd.x - 0.5f)
 							{
-								done =true;
+								done = true;
 							}
 							break;
 						}
@@ -315,17 +325,19 @@ public class Lighting : MonoBehaviour
 
 				}while(!done);
 			}
+			//got to figure out why this does not work
 			else
 			{
 				//the rays have been stoped by something, cut off vision eary
-				//this I really broken, like really really broken.
+				//this is really broken, like really really broken.
 				bool done = false;
 				Vector2 newRayEnd = hitList[i].point;
 				Vector2 increment = (newRayEnd - rayStart).normalized;
 				
 				Vector2 curentPos = rayStart;
 
-
+				Debug.DrawLine(new Vector3(rayStart.x, rayStart.y, transform.position.z + 0.1f), new Vector3(newRayEnd.x, newRayEnd.y, transform.position.z + 0.1f), Color.blue);
+				int count = 0;//should not need to do this
 				do
 				{
 					curentPos += increment;
@@ -365,7 +377,12 @@ public class Lighting : MonoBehaviour
 					}
 					
 					if(!done){ShowTile(curentPos);}
-					
+					count++;
+					if(count > 25)
+					{
+						done = true;//should not need this
+					}
+
 					
 				}while(!done);
 			}
