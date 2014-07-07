@@ -93,7 +93,7 @@ public class Radial : MonoBehaviour
 				}
 				else if(dir > 180 && dir < 270)
 				{
-					target.GetComponent<Wolf>().GiveCommand("stay", mPos);
+					target.GetComponent<Wolf>().GiveCommand("cancel", mPos);
 						//command for pointing bottom left(stay)
 				}
 				else if(dir > 270 && dir < 360)

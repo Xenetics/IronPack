@@ -151,26 +151,25 @@ public class Wolf : Unit
 			{
 				changeDirFacing(new Vector3(commandLocation.x, commandLocation.y, transform.position.z) );
 				move();
-				Vector2 temp1 = transform.position;
-				Vector2 temp2 = commandLocation;
+				Vector2 temp1 = new Vector2 (Mathf.Round(transform.position.x), Mathf.Round(transform.position.y) );
+				Vector2 temp2 = new Vector2 (Mathf.Round(commandLocation.x), Mathf.Round(commandLocation.y) );
 				if(temp1 == temp2)
 				{
 					//command compleated
-					commandPresent = false;
+					currentCommand = "stay";
 				}
 			}
 			else if(currentCommand == ("special"))
 			{
-				Debug.Log("do shit bb S");
+				//Debug.Log("do shit bb S");
 			}
-			else if(currentCommand == ("stay"))
+			else if(currentCommand == ("cancel"))
 			{
-				//yeah does nothing I guess
-				//maybe add in to try attack here
+				commandPresent = false;
 			}
 			else if(currentCommand == ("attack"))
 			{
-				Debug.Log("do shit bb A");
+				//Debug.Log("do shit bb A");
 			}
 		}
 	}
