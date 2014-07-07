@@ -41,13 +41,13 @@ public class Radial : MonoBehaviour
 			//find the wolf you clicked on
 		}
 
-		if (Input.GetMouseButton (0) && !radialShow) 
+		if (Input.GetMouseButton (0) && !radialShow && wolves != null) 
 		{
 			UpdateWolves();
 			for(int i = 0 ; i < wolves.Count ; ++i)
 			{
 				wolfPos = wolves[i].position;
-				if( (wolfPos - mPos).magnitude < 0.8f) 
+				if( (wolfPos - mPos).magnitude < 0.8f)
 				{
 					radialShow = true;
 					target = wolves[i].gameObject;
@@ -69,10 +69,6 @@ public class Radial : MonoBehaviour
 				else if(commandName == ("special"))
 				{
 					target.GetComponent<Wolf>().GiveCommand("special", mPos);
-				}
-				else if(commandName == ("stay"))
-				{
-					target.GetComponent<Wolf>().GiveCommand("stay", mPos);
 				}
 				else if(commandName == ("attack"))
 				{
@@ -97,8 +93,7 @@ public class Radial : MonoBehaviour
 				}
 				else if(dir > 180 && dir < 270)
 				{
-					commandName = ("stay");
-					takeNextClick = true;
+					target.GetComponent<Wolf>().GiveCommand("stay", mPos);
 						//command for pointing bottom left(stay)
 				}
 				else if(dir > 270 && dir < 360)
@@ -126,16 +121,16 @@ public class Radial : MonoBehaviour
 		}
 	}
 
-	void UpdateWolves()
+	private void UpdateWolves()
 	{
-		if (UnitManager.Instance.getWolves () != null)
+		if ( (UnitManager.Instance.getWolves () != null) && wolves != null)
 		{
 			List<GameObject> temp = UnitManager.Instance.getWolves ();
 			for(int i = 0 ; i < temp.Count ; ++i)
 			{
 				wolves.Add(temp[i].transform);
 			}
-		} 
+		}
 		else 
 		{
 			wolves = new List<Transform>();

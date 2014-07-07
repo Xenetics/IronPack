@@ -151,6 +151,13 @@ public class Wolf : Unit
 			{
 				changeDirFacing(new Vector3(commandLocation.x, commandLocation.y, transform.position.z) );
 				move();
+				Vector2 temp1 = transform.position;
+				Vector2 temp2 = commandLocation;
+				if(temp1 == temp2)
+				{
+					//command compleated
+					commandPresent = false;
+				}
 			}
 			else if(currentCommand == ("special"))
 			{
