@@ -574,7 +574,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b044f0162895f7749b4dfad56c4e1ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radialShow: 0
+  wolfRadialShow: 0
+  playerRadialShow: 0
   backgroundTexture: {fileID: 0}
   menuButtonX: 0
   menuButtonY: 0
